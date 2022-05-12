@@ -176,6 +176,7 @@ def test():
 
     # Plot results on the network
     demand_at_node123 = demand.loc[:, '125']
+    #asdf
     print(demand_at_node123.head())
 
 #test()
