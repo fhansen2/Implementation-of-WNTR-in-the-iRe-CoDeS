@@ -1,0 +1,260 @@
+[TITLE]
+
+[JUNCTIONS]
+;ID                      Elevation       Demand Pattern                 
+ N 0                                0    1585.0323141                            ;
+ N 1                                0    1585.0323141                            ;
+ N 2                                0    2726.2555803                            ;
+ N 3                                0    1585.0323141                            ;
+ N 4                                0    4089.3833705                            ;
+ N 5                                0    1585.0323141                            ;
+ N 6                                0    1585.0323141                            ;
+ N 7                                0    1585.0323141                            ;
+ N 8                                0    1585.0323141                            ;
+ N 9                                0    1585.0323141                            ;
+ N 11                               0    1585.0323141                            ;
+ N 12                               0    1585.0323141                            ;
+ N 13                               0    1585.0323141                            ;
+ N 14                               0    1585.0323141                            ;
+ N 15                               0    1585.0323141                            ;
+ N 16                               0    4089.3833705                            ;
+ N 17                               0    1585.0323141                            ;
+ N 18                               0    1585.0323141                            ;
+ N 19                               0    1585.0323141                            ;
+ N 20                               0    1363.1277902                            ;
+
+[RESERVOIRS]
+;ID                                   Head                  Pattern
+ PWF 2                    0.656167979                            ;
+ PWF 4                    0.656167979                            ;
+ PWF 16                   0.656167979                            ;
+ PWF 20                   0.656167979                            ;
+
+[TANKS]
+;ID                              Elevation           Init Level            Min Level            Max Level             Diameter           Min Volume Volume Curve         Overflow            
+
+[PIPES]
+;ID                   Node1                Node2                              Length             Diameter            Roughness           Minor Loss               Status
+ f0t1                 N 0                  N 1                             1000              12             100               0                 Open   ;
+ f0t7                 N 0                  N 7                             1000              12             100               0                 Open   ;
+ f1t0                 N 1                  N 0                             1000              12             100               0                 Open   ;
+ f1t8                 N 1                  N 8                             1000              12             100               0                 Open   ;
+ f1t2                 N 1                  N 2                             1000              12             100               0                 Open   ;
+ f2t1                 N 2                  N 1                             1000              12             100               0                 Open   ;
+ f2t9                 N 2                  N 9                             1000              12             100               0                 Open   ;
+ f2t3                 N 2                  N 3                             1000              12             100               0                 Open   ;
+ f3t2                 N 3                  N 2                             1000              12             100               0                 Open   ;
+ f3t4                 N 3                  N 4                             1000              12             100               0                 Open   ;
+ f4t3                 N 4                  N 3                             1000              12             100               0                 Open   ;
+ f4t11                N 4                  N 11                            1000              12             100               0                 Open   ;
+ f4t5                 N 4                  N 5                             1000              12             100               0                 Open   ;
+ f5t4                 N 5                  N 4                             1000              12             100               0                 Open   ;
+ f5t6                 N 5                  N 6                             1000              12             100               0                 Open   ;
+ f5t12                N 5                  N 12                            1000              12             100               0                 Open   ;
+ f6t5                 N 6                  N 5                             1000              12             100               0                 Open   ;
+ f6t13                N 6                  N 13                            1000              12             100               0                 Open   ;
+ f7t0                 N 7                  N 0                             1000              12             100               0                 Open   ;
+ f7t8                 N 7                  N 8                             1000              12             100               0                 Open   ;
+ f7t14                N 7                  N 14                            1000              12             100               0                 Open   ;
+ f8t7                 N 8                  N 7                             1000              12             100               0                 Open   ;
+ f8t1                 N 8                  N 1                             1000              12             100               0                 Open   ;
+ f8t9                 N 8                  N 9                             1000              12             100               0                 Open   ;
+ f9t2                 N 9                  N 2                             1000              12             100               0                 Open   ;
+ f9t8                 N 9                  N 8                             1000              12             100               0                 Open   ;
+ f9t16                N 9                  N 16                            1000              12             100               0                 Open   ;
+ f11t4                N 11                 N 4                             1000              12             100               0                 Open   ;
+ f11t18               N 11                 N 18                            1000              12             100               0                 Open   ;
+ f11t12               N 11                 N 12                            1000              12             100               0                 Open   ;
+ f12t5                N 12                 N 5                             1000              12             100               0                 Open   ;
+ f12t11               N 12                 N 11                            1000              12             100               0                 Open   ;
+ f12t13               N 12                 N 13                            1000              12             100               0                 Open   ;
+ f12t19               N 12                 N 19                            1000              12             100               0                 Open   ;
+ f13t6                N 13                 N 6                             1000              12             100               0                 Open   ;
+ f13t12               N 13                 N 12                            1000              12             100               0                 Open   ;
+ f13t20               N 13                 N 20                            1000              12             100               0                 Open   ;
+ f14t7                N 14                 N 7                             1000              12             100               0                 Open   ;
+ f14t15               N 14                 N 15                            1000              12             100               0                 Open   ;
+ f15t14               N 15                 N 14                            1000              12             100               0                 Open   ;
+ f15t16               N 15                 N 16                            1000              12             100               0                 Open   ;
+ f16t9                N 16                 N 9                             1000              12             100               0                 Open   ;
+ f16t15               N 16                 N 15                            1000              12             100               0                 Open   ;
+ f16t17               N 16                 N 17                            1000              12             100               0                 Open   ;
+ f17t16               N 17                 N 16                            1000              12             100               0                 Open   ;
+ f17t18               N 17                 N 18                            1000              12             100               0                 Open   ;
+ f18t17               N 18                 N 17                            1000              12             100               0                 Open   ;
+ f18t11               N 18                 N 11                            1000              12             100               0                 Open   ;
+ f18t19               N 18                 N 19                            1000              12             100               0                 Open   ;
+ f19t18               N 19                 N 18                            1000              12             100               0                 Open   ;
+ f19t12               N 19                 N 12                            1000              12             100               0                 Open   ;
+ f19t20               N 19                 N 20                            1000              12             100               0                 Open   ;
+ f20t13               N 20                 N 13                            1000              12             100               0                 Open   ;
+ f20t19               N 20                 N 19                            1000              12             100               0                 Open   ;
+
+[PUMPS]
+;ID                   Node1                Node2                Properties          
+
+[VALVES]
+;ID                   Node1                Node2                            Diameter Type              Setting           Minor Loss
+ v01                  N 0                  N 1                               12 FCV                0               0   ;
+ v10                  N 1                  N 0                               12 FCV                0               0   ;
+ v07                  N 0                  N 7                               12 FCV                0               0   ;
+ v70                  N 7                  N 0                               12 FCV                0               0   ;
+ v18                  N 1                  N 8                               12 FCV                0               0   ;
+ v81                  N 8                  N 1                               12 FCV                0               0   ;
+ v12                  N 1                  N 2                               12 FCV                0               0   ;
+ v21                  N 2                  N 1                               12 FCV                0               0   ;
+ v29                  N 2                  N 9                               12 FCV                0               0   ;
+ v92                  N 9                  N 2                               12 FCV                0               0   ;
+ v23                  N 2                  N 3                               12 FCV                0               0   ;
+ v32                  N 3                  N 2                               12 FCV                0               0   ;
+ v34                  N 3                  N 4                               12 FCV                0               0   ;
+ v43                  N 4                  N 3                               12 FCV                0               0   ;
+ v411                 N 4                  N 11                              12 FCV                0               0   ;
+ v114                 N 11                 N 4                               12 FCV                0               0   ;
+ v45                  N 4                  N 5                               12 FCV                0               0   ;
+ v54                  N 5                  N 4                               12 FCV                0               0   ;
+ v56                  N 5                  N 6                               12 FCV                0               0   ;
+ v65                  N 6                  N 5                               12 FCV                0               0   ;
+ v512                 N 5                  N 12                              12 FCV                0               0   ;
+ v125                 N 12                 N 5                               12 FCV                0               0   ;
+ v613                 N 6                  N 13                              12 FCV                0               0   ;
+ v136                 N 13                 N 6                               12 FCV                0               0   ;
+ v78                  N 7                  N 8                               12 FCV                0               0   ;
+ v87                  N 8                  N 7                               12 FCV                0               0   ;
+ v714                 N 7                  N 14                              12 FCV                0               0   ;
+ v147                 N 14                 N 7                               12 FCV                0               0   ;
+ v89                  N 8                  N 9                               12 FCV                0               0   ;
+ v98                  N 9                  N 8                               12 FCV                0               0   ;
+ v916                 N 9                  N 16                              12 FCV                0               0   ;
+ v169                 N 16                 N 9                               12 FCV                0               0   ;
+ v1118                N 11                 N 18                              12 FCV                0               0   ;
+ v1811                N 18                 N 11                              12 FCV                0               0   ;
+ v1112                N 11                 N 12                              12 FCV                0               0   ;
+ v1211                N 12                 N 11                              12 FCV                0               0   ;
+ v1213                N 12                 N 13                              12 FCV                0               0   ;
+ v1312                N 13                 N 12                              12 FCV                0               0   ;
+ v1219                N 12                 N 19                              12 FCV                0               0   ;
+ v1912                N 19                 N 12                              12 FCV                0               0   ;
+ v1320                N 13                 N 20                              12 FCV                0               0   ;
+ v2013                N 20                 N 13                              12 FCV                0               0   ;
+ v1415                N 14                 N 15                              12 FCV                0               0   ;
+ v1514                N 15                 N 14                              12 FCV                0               0   ;
+ v1516                N 15                 N 16                              12 FCV                0               0   ;
+ v1615                N 16                 N 15                              12 FCV                0               0   ;
+ v1617                N 16                 N 17                              12 FCV                0               0   ;
+ v1716                N 17                 N 16                              12 FCV                0               0   ;
+ v1718                N 17                 N 18                              12 FCV                0               0   ;
+ v1817                N 18                 N 17                              12 FCV                0               0   ;
+ v1819                N 18                 N 19                              12 FCV                0               0   ;
+ v1918                N 19                 N 18                              12 FCV                0               0   ;
+ v1920                N 19                 N 20                              12 FCV                0               0   ;
+ v2019                N 20                 N 19                              12 FCV                0               0   ;
+
+[TAGS]
+;type      name       tag       
+
+[DEMANDS]
+;ID        Demand     Pattern   
+
+[STATUS]
+;ID        Setting   
+[PATTERNS]
+;ID        Multipliers
+
+[CURVES]
+;ID         X-Value      Y-Value     
+
+[CONTROLS]
+
+[RULES]
+
+[ENERGY]
+GLOBAL PRICE           0.0000
+
+[EMITTERS]
+;ID        Flow coefficient
+
+[QUALITY]
+
+[SOURCES]
+;Node      Type       Quality    Pattern   
+
+[REACTIONS]
+;Type           Pipe/Tank               Coefficient
+
+ ORDER BULK 1
+ ORDER TANK 1
+ ORDER WALL 1
+ GLOBAL BULK 0.0000    
+ GLOBAL WALL 0.0000    
+
+[MIXING]
+;Tank ID             Model Fraction
+
+[TIMES]
+DURATION             00:00:00
+HYDRAULIC TIMESTEP   01:00:00
+QUALITY TIMESTEP     00:06:00
+PATTERN TIMESTEP     01:00:00
+PATTERN START        00:00:00
+REPORT TIMESTEP      01:00:00
+REPORT START         00:00:00
+START CLOCKTIME      00:00:00 AM
+RULE TIMESTEP        00:06:00
+STATISTIC            NONE      
+
+[REPORT]
+
+[OPTIONS]
+UNITS                GPM                 
+HEADLOSS             H-W                 
+SPECIFIC GRAVITY     1
+VISCOSITY            1
+TRIALS               200
+ACCURACY             0.001
+CHECKFREQ            2
+MAXCHECK             10
+UNBALANCED           STOP                
+PATTERN              1                   
+DEMAND MULTIPLIER    1
+EMITTER EXPONENT     0.5
+QUALITY              NONE                
+DIFFUSIVITY          1
+TOLERANCE            0.01
+
+[COORDINATES]
+;Node      X-Coord    Y-Coord   
+N 0                 0.000000000          0.000000000
+N 1                 5.000000000          0.000000000
+N 2                10.000000000          0.000000000
+PWF 2              10.000000000          0.000000000
+N 3                15.000000000          0.000000000
+N 4                20.000000000          0.000000000
+PWF 4              20.000000000          0.000000000
+N 5                25.000000000          0.000000000
+N 6                30.000000000          0.000000000
+N 7                 0.000000000          5.000000000
+N 8                 5.000000000          5.000000000
+N 9                10.000000000          5.000000000
+N 11               20.000000000          5.000000000
+N 12               25.000000000          5.000000000
+N 13               30.000000000          5.000000000
+N 14                0.000000000         10.000000000
+N 15                5.000000000         10.000000000
+N 16               10.000000000         10.000000000
+PWF 16             10.000000000         10.000000000
+N 17               15.000000000         10.000000000
+N 18               20.000000000         10.000000000
+N 19               25.000000000         10.000000000
+N 20               30.000000000         10.000000000
+PWF 20             30.000000000         10.000000000
+
+[VERTICES]
+;Link      X-Coord    Y-Coord   
+
+[LABELS]
+
+[BACKDROP]
+UNITS    NONE
+
+[END]
