@@ -1,0 +1,1590 @@
+{
+    "version": "wntr-0.4.1",
+    "comment": "WaterNetworkModel - all values given in SI units",
+    "name": "CaseStudyNetwork.inp",
+    "options": {
+        "time": {
+            "duration": 604800.0,
+            "hydraulic_timestep": 3600,
+            "quality_timestep": 300,
+            "rule_timestep": 360,
+            "pattern_timestep": 3600,
+            "pattern_start": 0.0,
+            "report_timestep": 3600,
+            "report_start": 0.0,
+            "start_clocktime": 0.0,
+            "statistic": "NONE",
+            "pattern_interpolation": false
+        },
+        "hydraulic": {
+            "headloss": "H-W",
+            "hydraulics": null,
+            "hydraulics_filename": null,
+            "viscosity": 1.0,
+            "specific_gravity": 1.0,
+            "pattern": "1",
+            "demand_multiplier": 1.0,
+            "demand_model": "PDD",
+            "minimum_pressure": 0.0,
+            "required_pressure": 0.07,
+            "pressure_exponent": 0.5,
+            "emitter_exponent": 0.5,
+            "trials": 40,
+            "accuracy": 0.001,
+            "unbalanced": "CONTINUE",
+            "unbalanced_value": 10,
+            "checkfreq": 2,
+            "maxcheck": 10,
+            "damplimit": 0.0,
+            "headerror": 0.0,
+            "flowchange": 0.0,
+            "inpfile_units": "GPM",
+            "inpfile_pressure_units": null
+        },
+        "report": {
+            "pagesize": 0,
+            "report_filename": null,
+            "status": "YES",
+            "summary": "NO",
+            "energy": "NO",
+            "nodes": false,
+            "links": false,
+            "report_params": {
+                "elevation": false,
+                "demand": true,
+                "head": true,
+                "pressure": true,
+                "quality": true,
+                "length": false,
+                "diameter": false,
+                "flow": true,
+                "velocity": true,
+                "headloss": true,
+                "position": false,
+                "setting": false,
+                "reaction": false,
+                "f-factor": false
+            },
+            "param_opts": {
+                "elevation": {},
+                "demand": {},
+                "head": {},
+                "pressure": {},
+                "quality": {},
+                "length": {},
+                "diameter": {},
+                "flow": {},
+                "velocity": {},
+                "headloss": {},
+                "position": {},
+                "setting": {},
+                "reaction": {},
+                "f-factor": {}
+            }
+        },
+        "quality": {
+            "parameter": "TRACE",
+            "trace_node": "Lake",
+            "chemical_name": "CHEMICAL",
+            "diffusivity": 1.0,
+            "tolerance": 0.01,
+            "inpfile_units": "mg/L"
+        },
+        "reaction": {
+            "bulk_order": 1.0,
+            "wall_order": 1.0,
+            "tank_order": 1.0,
+            "bulk_coeff": 0.0,
+            "wall_coeff": 0.0,
+            "limiting_potential": 0.0,
+            "roughness_correl": 0.0
+        },
+        "energy": {
+            "global_price": 0.0,
+            "global_pattern": null,
+            "global_efficiency": 75.0,
+            "demand_charge": 0.0
+        },
+        "graphics": {
+            "dimensions": [
+                "6.157",
+                "-1.553",
+                "46.703",
+                "32.613"
+            ],
+            "units": "NONE",
+            "offset": [
+                "0.00",
+                "0.00"
+            ],
+            "image_filename": null,
+            "map_filename": null
+        },
+        "user": {}
+    },
+    "curves": [
+        {
+            "name": "1",
+            "curve_type": "HEAD",
+            "points": [
+                [
+                    0.0,
+                    31.6992
+                ],
+                [
+                    0.1261803928,
+                    28.041600000000003
+                ],
+                [
+                    0.2523607856,
+                    19.2024
+                ]
+            ]
+        },
+        {
+            "name": "2",
+            "curve_type": "HEAD",
+            "points": [
+                [
+                    0.0,
+                    60.96
+                ],
+                [
+                    0.5047215712,
+                    42.062400000000004
+                ],
+                [
+                    0.8832627496000001,
+                    26.2128
+                ]
+            ]
+        }
+    ],
+    "patterns": [
+        {
+            "name": "1",
+            "multipliers": [
+                0.0,
+                0.0,
+                2.0,
+                0.0,
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ]
+        }, 
+        {
+            "name": "2",
+            "multipliers": [
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0
+        ]
+    } 
+    ],
+    "nodes": [
+        {
+            "name": "1",
+            "node_type": "Junction",
+            "coordinates": [
+                0,
+                0
+            ],
+            "demand_timeseries_list": [
+                {
+                    "base_val": 0.0,
+                    "pattern_name": "1"
+                }
+            ],
+            "elevation": 0.0,
+            "emitter_coefficient": null,
+            "initial_quality": 0.0,
+            "minimum_pressure": null,
+            "pressure_exponent": null,
+            "required_pressure": null,
+            "tag": null
+        },
+        {
+            "name": "2",
+            "node_type": "Junction",
+            "coordinates": [
+                5,
+                0
+            ],
+            "demand_timeseries_list": [
+                {
+                    "base_val": 0.0,
+                    "pattern_name": "1"
+                }
+            ],
+            "elevation": 0.0,
+            "emitter_coefficient": null,
+            "initial_quality": 0.0,
+            "minimum_pressure": null,
+            "pressure_exponent": null,
+            "required_pressure": null,
+            "tag": null
+        },
+        {
+            "name": "3",
+            "node_type": "Junction",
+            "coordinates": [
+                10,
+                0
+            ],
+            "demand_timeseries_list": [
+                {
+                    "base_val": 0.086,
+                    "pattern_name": "1"
+                }
+            ],
+            "elevation": 0.0,
+            "emitter_coefficient": null,
+            "initial_quality": 0.0,
+            "minimum_pressure": null,
+            "pressure_exponent": null,
+            "required_pressure": null,
+            "tag": null
+        },
+        {
+            "name": "4",
+            "node_type": "Junction",
+            "coordinates": [
+               15,
+                0
+            ],
+            "demand_timeseries_list": [
+                {
+                    "base_val": 0,
+                    "pattern_name": "1"
+                }
+            ],
+            "elevation": 0.0,
+            "emitter_coefficient": null,
+            "initial_quality": 0.0,
+            "minimum_pressure": null,
+            "pressure_exponent": null,
+            "required_pressure": null,
+            "tag": null
+        },
+        {
+            "name": "5",
+            "node_type": "Junction",
+            "coordinates": [
+                20,
+                0.0
+            ],
+            "demand_timeseries_list": [
+                {
+                    "base_val": 0.086,
+                    "pattern_name": "1"
+                }
+            ],
+            "elevation": 40.0,
+            "emitter_coefficient": null,
+            "initial_quality": 0.0,
+            "minimum_pressure": null,
+            "pressure_exponent": null,
+            "required_pressure": null,
+            "tag": null
+        },
+        {
+            "name": "6",
+            "node_type": "Junction",
+            "coordinates": [
+                25,
+                0.0
+            ],
+            "demand_timeseries_list": [
+                {
+                    "base_val": 0.0,
+                    "pattern_name": "1"
+                }
+            ],
+            "elevation": 0.0,
+            "emitter_coefficient": null,
+            "initial_quality": 0.0,
+            "minimum_pressure": null,
+            "pressure_exponent": null,
+            "required_pressure": null,
+            "tag": null
+        },
+        {
+            "name": "7",
+            "node_type": "Junction",
+            "coordinates": [
+                30,
+                0
+            ],
+            "demand_timeseries_list": [
+                {
+                    "base_val": 0.0,
+                    "pattern_name": "1"
+                }
+            ],
+            "elevation": 0.0,
+            "emitter_coefficient": null,
+            "initial_quality": 0.0,
+            "minimum_pressure": null,
+            "pressure_exponent": null,
+            "required_pressure": null,
+            "tag": null
+        },
+        {
+            "name": "8",
+            "node_type": "Junction",
+            "coordinates": [
+                0,
+                5
+            ],
+            "demand_timeseries_list": [
+                {
+                    "base_val": 0.0,
+                    "pattern_name": "1"
+                }
+            ],
+            "elevation": 0.0,
+            "emitter_coefficient": null,
+            "initial_quality": 0.0,
+            "minimum_pressure": null,
+            "pressure_exponent": null,
+            "required_pressure": null,
+            "tag": null
+        },
+        {
+            "name": "9",
+            "node_type": "Junction",
+            "coordinates": [
+                5,
+                5
+            ],
+            "demand_timeseries_list": [
+                {
+                    "base_val": 0.0,
+                    "pattern_name": "1"
+                }
+            ],
+            "elevation": 0.0,
+            "emitter_coefficient": null,
+            "initial_quality": 0.0,
+            "minimum_pressure": null,
+            "pressure_exponent": null,
+            "required_pressure": null,
+            "tag": null
+        },
+        {
+            "name": "10",
+            "node_type": "Junction",
+            "coordinates": [
+                10,
+                5
+            ],
+            "demand_timeseries_list": [
+                {
+                    "base_val": 0.0,
+                    "pattern_name": "1"
+                }
+            ],
+            "elevation": 0.0,
+            "emitter_coefficient": null,
+            "initial_quality": 0.0,
+            "minimum_pressure": null,
+            "pressure_exponent": null,
+            "required_pressure": null,
+            "tag": null
+        },
+        {
+            "name": "12",
+            "node_type": "Junction",
+            "coordinates": [
+                20,
+                5
+            ],
+            "demand_timeseries_list": [
+                {
+                    "base_val": 0.0,
+                    "pattern_name": "1"
+                }
+            ],
+            "elevation": 0.0,
+            "emitter_coefficient": null,
+            "initial_quality": 0.0,
+            "minimum_pressure": null,
+            "pressure_exponent": null,
+            "required_pressure": null,
+            "tag": null
+        },
+        {
+            "name": "13",
+            "node_type": "Junction",
+            "coordinates": [
+                25,
+                5
+            ],
+            "demand_timeseries_list": [
+                {
+                    "base_val": 0.0,
+                    "pattern_name": "1"
+                }
+            ],
+            "elevation": 0.0,
+            "emitter_coefficient": null,
+            "initial_quality": 0.0,
+            "minimum_pressure": null,
+            "pressure_exponent": null,
+            "required_pressure": null,
+            "tag": null
+        },
+        {
+            "name": "14",
+            "node_type": "Junction",
+            "coordinates": [
+                30,
+                5
+            ],
+            "demand_timeseries_list": [
+                {
+                    "base_val": 0.0,
+                    "pattern_name": "1"
+                }
+            ],
+            "elevation": 0.0,
+            "emitter_coefficient": null,
+            "initial_quality": 0.0,
+            "minimum_pressure": null,
+            "pressure_exponent": null,
+            "required_pressure": null,
+            "tag": null
+        },
+        {
+            "name": "15",
+            "node_type": "Junction",
+            "coordinates": [
+                0,
+                10
+            ],
+            "demand_timeseries_list": [
+                {
+                    "base_val": 0.0,
+                    "pattern_name": "1"
+                }
+            ],
+            "elevation": 0.0,
+            "emitter_coefficient": null,
+            "initial_quality": 0.0,
+            "minimum_pressure": null,
+            "pressure_exponent": null,
+            "required_pressure": null,
+            "tag": null
+        },
+        {
+            "name": "16",
+            "node_type": "Junction",
+            "coordinates": [
+                5,
+                10
+            ],
+            "demand_timeseries_list": [
+                {
+                    "base_val": 0.0,
+                    "pattern_name": "1"
+                }
+            ],
+            "elevation": 0.0,
+            "emitter_coefficient": null,
+            "initial_quality": 0.0,
+            "minimum_pressure": null,
+            "pressure_exponent": null,
+            "required_pressure": null,
+            "tag": null
+        },
+        {
+            "name": "17",
+            "node_type": "Junction",
+            "coordinates": [
+                10,
+                10
+            ],
+            "demand_timeseries_list": [
+                {
+                    "base_val": 0.086,
+                    "pattern_name": "1"
+                }
+            ],
+            "elevation": 0.0,
+            "emitter_coefficient": null,
+            "initial_quality": 0.0,
+            "minimum_pressure": null,
+            "pressure_exponent": null,
+            "required_pressure": null,
+            "tag": null
+        },
+        {
+            "name": "18",
+            "node_type": "Junction",
+            "coordinates": [
+                15,
+                10
+            ],
+            "demand_timeseries_list": [
+                {
+                    "base_val": 0.0,
+                    "pattern_name": "1"
+                }
+            ],
+            "elevation": 0.0,
+            "emitter_coefficient": null,
+            "initial_quality": 0.0,
+            "minimum_pressure": null,
+            "pressure_exponent": null,
+            "required_pressure": null,
+            "tag": null
+        },
+        {
+            "name": "19",
+            "node_type": "Junction",
+            "coordinates": [
+                20,
+                10
+            ],
+            "demand_timeseries_list": [
+                {
+                    "base_val": 0.086,
+                    "pattern_name": "1"
+                }
+            ],
+            "elevation": 0.0,
+            "emitter_coefficient": null,
+            "initial_quality": 0.0,
+            "minimum_pressure": null,
+            "pressure_exponent": null,
+            "required_pressure": null,
+            "tag": null
+        },
+        {
+            "name": "20",
+            "node_type": "Junction",
+            "coordinates": [
+                25,
+                10
+            ],
+            "demand_timeseries_list": [
+                {
+                    "base_val": 0.0,
+                    "pattern_name": "1"
+                }
+            ],
+            "elevation": 0.0,
+            "emitter_coefficient": null,
+            "initial_quality": 0.0,
+            "minimum_pressure": null,
+            "pressure_exponent": null,
+            "required_pressure": null,
+            "tag": null
+        },
+        {
+            "name": "21",
+            "node_type": "Junction",
+            "coordinates": [
+                30,
+                10
+            ],
+            "demand_timeseries_list": [
+                {
+                    "base_val": 0.086,
+                    "pattern_name": "1"
+                }
+            ],
+            "elevation": 0.0,
+            "emitter_coefficient": null,
+            "initial_quality": 0.0,
+            "minimum_pressure": null,
+            "pressure_exponent": null,
+            "required_pressure": null,
+            "tag": null
+        },
+        {
+            "name": "PWF3",
+            "node_type": "Reservoir",
+            "base_head": 0.2,
+            "coordinates": [
+                10,
+                0
+            ],
+            "head_pattern_name": null,
+            "initial_quality": 0.0,
+            "tag": null
+        },
+        {
+            "name": "PWF5",
+            "node_type": "Reservoir",
+            "base_head": 0.2,
+            "coordinates": [
+                20,
+                0
+            ],
+            "head_pattern_name": null,
+            "initial_quality": 0.0,
+            "tag": null
+        },
+        {
+            "name": "PWF17",
+            "node_type": "Reservoir",
+            "base_head": 0.2,
+            "coordinates": [
+                10,
+                10
+            ],
+            "head_pattern_name": null,
+            "initial_quality": 0.0,
+            "tag": null
+        },
+        {
+            "name": "PWF21",
+            "node_type": "Reservoir",
+            "base_head": 0.2,
+            "coordinates": [
+                20,
+                10
+            ],
+            "head_pattern_name": null,
+            "initial_quality": 0.0,
+            "tag": null
+        }
+    ],
+    "links": [
+        {
+            "name": "12",
+            "link_type": "Pipe",
+            "start_node_name": "1",
+            "end_node_name": "2",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "21",
+            "link_type": "Pipe",
+            "start_node_name": "2",
+            "end_node_name": "1",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "23",
+            "link_type": "Pipe",
+            "start_node_name": "2",
+            "end_node_name": "3",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "32",
+            "link_type": "Pipe",
+            "start_node_name": "3",
+            "end_node_name": "2",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "18",
+            "link_type": "Pipe",
+            "start_node_name": "1",
+            "end_node_name": "8",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "81",
+            "link_type": "Pipe",
+            "start_node_name": "8",
+            "end_node_name": "1",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "29",
+            "link_type": "Pipe",
+            "start_node_name": "2",
+            "end_node_name": "9",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "92",
+            "link_type": "Pipe",
+            "start_node_name": "9",
+            "end_node_name": "2",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "310",
+            "link_type": "Pipe",
+            "start_node_name": "3",
+            "end_node_name": "10",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "103",
+            "link_type": "Pipe",
+            "start_node_name": "10",
+            "end_node_name": "3",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "34",
+            "link_type": "Pipe",
+            "start_node_name": "3",
+            "end_node_name": "4",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "43",
+            "link_type": "Pipe",
+            "start_node_name": "4",
+            "end_node_name": "3",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "45",
+            "link_type": "Pipe",
+            "start_node_name": "4",
+            "end_node_name": "5",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "54",
+            "link_type": "Pipe",
+            "start_node_name": "5",
+            "end_node_name": "4",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "56",
+            "link_type": "Pipe",
+            "start_node_name": "5",
+            "end_node_name": "6",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "512",
+            "link_type": "Pipe",
+            "start_node_name": "5",
+            "end_node_name": "12",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "65",
+            "link_type": "Pipe",
+            "start_node_name": "6",
+            "end_node_name": "5",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "125",
+            "link_type": "Pipe",
+            "start_node_name": "12",
+            "end_node_name": "5",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "67",
+            "link_type": "Pipe",
+            "start_node_name": "6",
+            "end_node_name": "7",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "76",
+            "link_type": "Pipe",
+            "start_node_name": "7",
+            "end_node_name": "1",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "613",
+            "link_type": "Pipe",
+            "start_node_name": "6",
+            "end_node_name": "13",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "136",
+            "link_type": "Pipe",
+            "start_node_name": "13",
+            "end_node_name": "6",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "714",
+            "link_type": "Pipe",
+            "start_node_name": "7",
+            "end_node_name": "14",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "147",
+            "link_type": "Pipe",
+            "start_node_name": "14",
+            "end_node_name": "7",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "89",
+            "link_type": "Pipe",
+            "start_node_name": "8",
+            "end_node_name": "9",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "98",
+            "link_type": "Pipe",
+            "start_node_name": "9",
+            "end_node_name": "8",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "815",
+            "link_type": "Pipe",
+            "start_node_name": "8",
+            "end_node_name": "15",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "158",
+            "link_type": "Pipe",
+            "start_node_name": "15",
+            "end_node_name": "8",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "910",
+            "link_type": "Pipe",
+            "start_node_name": "9",
+            "end_node_name": "10",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "109",
+            "link_type": "Pipe",
+            "start_node_name": "10",
+            "end_node_name": "9",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "1017",
+            "link_type": "Pipe",
+            "start_node_name": "10",
+            "end_node_name": "17",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "1710",
+            "link_type": "Pipe",
+            "start_node_name": "17",
+            "end_node_name": "10",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "1716",
+            "link_type": "Pipe",
+            "start_node_name": "17",
+            "end_node_name": "16",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "1617",
+            "link_type": "Pipe",
+            "start_node_name": "16",
+            "end_node_name": "17",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "1615",
+            "link_type": "Pipe",
+            "start_node_name": "16",
+            "end_node_name": "15",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "1516",
+            "link_type": "Pipe",
+            "start_node_name": "15",
+            "end_node_name": "16",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "1718",
+            "link_type": "Pipe",
+            "start_node_name": "17",
+            "end_node_name": "18",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "1817",
+            "link_type": "Pipe",
+            "start_node_name": "18",
+            "end_node_name": "17",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "1819",
+            "link_type": "Pipe",
+            "start_node_name": "18",
+            "end_node_name": "19",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "1918",
+            "link_type": "Pipe",
+            "start_node_name": "19",
+            "end_node_name": "18",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "1920",
+            "link_type": "Pipe",
+            "start_node_name": "19",
+            "end_node_name": "20",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "2019",
+            "link_type": "Pipe",
+            "start_node_name": "20",
+            "end_node_name": "19",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "1912",
+            "link_type": "Pipe",
+            "start_node_name": "19",
+            "end_node_name": "12",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "1219",
+            "link_type": "Pipe",
+            "start_node_name": "12",
+            "end_node_name": "19",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "1213",
+            "link_type": "Pipe",
+            "start_node_name": "12",
+            "end_node_name": "13",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "1312",
+            "link_type": "Pipe",
+            "start_node_name": "13",
+            "end_node_name": "12",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "1314",
+            "link_type": "Pipe",
+            "start_node_name": "13",
+            "end_node_name": "14",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "1413",
+            "link_type": "Pipe",
+            "start_node_name": "14",
+            "end_node_name": "13",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "1320",
+            "link_type": "Pipe",
+            "start_node_name": "13",
+            "end_node_name": "20",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "2013",
+            "link_type": "Pipe",
+            "start_node_name": "20",
+            "end_node_name": "13",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "2021",
+            "link_type": "Pipe",
+            "start_node_name": "20",
+            "end_node_name": "21",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "2120",
+            "link_type": "Pipe",
+            "start_node_name": "21",
+            "end_node_name": "20",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        },
+        {
+            "name": "2114",
+            "link_type": "Pipe",
+            "start_node_name": "21",
+            "end_node_name": "14",
+            "bulk_coeff": null,
+            "check_valve": false,
+            "diameter": 10,
+            "initial_setting": null,
+            "initial_status": "Open",
+            "length": 5000,
+            "minor_loss": 0.0,
+            "roughness": 0.0,
+            "tag": null,
+            "vertices": [],
+            "wall_coeff": null
+        }
+    ],
+    "sources": [],
+    "controls": []
+}

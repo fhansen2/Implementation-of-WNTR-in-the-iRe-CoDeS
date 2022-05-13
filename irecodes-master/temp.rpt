@@ -1,0 +1,67 @@
+  Page 1                                    Fri May 13 13:27:55 2022
+
+  ******************************************************************
+  *                           E P A N E T                          *
+  *                   Hydraulic and Water Quality                  *
+  *                   Analysis for Pipe Networks                   *
+  *                         Version 2.2                            *
+  ******************************************************************
+  
+   
+      Input Data File ................... temp.inp
+      Number of Junctions................ 20
+      Number of Reservoirs............... 4
+      Number of Tanks ................... 0
+      Number of Pipes ................... 62
+      Number of Pumps ................... 0
+      Number of Valves .................. 54
+      Headloss Formula .................. Hazen-Williams
+      Nodal Demand Model ................ DDA
+      Hydraulic Timestep ................ 1.00 hrs
+      Hydraulic Accuracy ................ 0.001000
+      Status Check Frequency ............ 2
+      Maximum Trials Checked ............ 10
+      Damping Limit Threshold ........... 0.000000
+      Maximum Trials .................... 200
+      Quality Analysis .................. None
+      Specific Gravity .................. 1.00
+      Relative Kinematic Viscosity ...... 1.00
+      Relative Chemical Diffusivity ..... 1.00
+      Demand Multiplier ................. 1.00
+      Total Duration .................... 0.00 hrs
+      Reporting Criteria:
+         No Nodes
+         No Links
+   
+  Analysis begun Fri May 13 13:27:55 2022
+
+  WARNING: Negative pressures at 0:00:00 hrs.
+  WARNING: FCV v01 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v70 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v81 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v12 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v92 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v23 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v34 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v411 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v45 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v56 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v512 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v613 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v78 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v147 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v98 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v169 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v1118 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v1112 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v1213 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v1219 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v1320 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v1514 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v1615 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v1617 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v1718 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v1819 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v1920 open but cannot deliver flow at 0:00:00 hrs.
+   
+  Analysis ended Fri May 13 13:27:55 2022

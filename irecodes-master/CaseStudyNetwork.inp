@@ -1,0 +1,292 @@
+[TITLE]
+EPANET Example Network 3
+Example showing how the percent of Lake water in a dual-source 
+system changes over time.
+
+UPDATE: Duration updated to run a 7 day simulation 
+UPDATE: Added coordinates for Junction 177
+
+[JUNCTIONS]
+;ID              	Elev        	Demand      	Pattern         
+ 1              	0            	0           	                	;
+ 2              	0             	0           	                  	;
+ 3              	0           	0.0019907407407407                 	;
+ 4              	0           	0           	                   	;
+ 5              	0             	0.0029861111111111           	  	;
+ 6              	0           	0           	                	;
+ 7            	    0           	0           	                	;
+ 8             	    0           	0           	                	;
+ 9             	    0             	0             	                	;
+ 10             	0              	0              	                	;
+ 12             	0           	0             	                	;
+ 13             	0             	0              	                	;
+ 14             	0            	0              	                	;
+ 15             	0             	0             	                	;
+ 16             	0           	0             	                	;
+ 17             	0             	0.0029861111111111        	        ;
+ 18             	0           	0             	                	;
+ 19             	0           	0             	                	;
+ 20             	0           	0           	                	;
+ 21             	0             	0.00099537037037037       	        ;
+ 
+[RESERVOIRS]
+;ID              	Head        	Pattern         
+ PWF3              	              	        	;
+ PWF5              	              	       	    ;
+ PWF17             	              	        	;
+ PWF21       	                	            ;
+
+[TANKS]
+;ID              	Elevation   	InitLevel   	MinLevel    	MaxLevel    	Diameter    	MinVol      	VolCurve        	Overflow
+ PWF3                                                                                                               	              	        	;
+ PWF5              	                                                                                                                   	       	    ;
+ PWF17                                                                                                                 	              	        	;
+ PWF21       	                                                                                                                       	            ;
+
+[PIPES]
+;ID              	Node1           	Node2           	Length      	Diameter    	Roughness   	MinorLoss   	Status
+ 12              	1               	2                 	5000          	1000          	0            	0           	Open  	;
+ 21              	2               	1                 	5000          	1000          	0            	0           	Open  	;
+ 18              	1               	8                 	5000          	1000          	0            	0           	Open  	;
+ 81               	8           	    1               	5000          	1000          	0            	0           	Open  	;
+ PWF33             	PWF3               	3                	5000          	1000          	0            	0           	Open  	;
+ 23             	2                 	3                	5000          	1000          	0            	0           	Open  	;
+ 32             	3                	2                	5000          	1000          	0            	0           	Open  	;
+ 29             	2                	9                	5000          	1000          	0            	0           	Open  	;
+ 92             	9                	2                	5000          	1000          	0            	0           	Open  	;
+ 34             	3                	4                	5000          	1000          	0            	0           	Open  	;
+ 43             	4                	3                	5000          	1000          	0            	0           	Open  	;
+ 45             	4                	5                	5000          	1000          	0            	0           	Open  	;
+ 54             	5                	4                	5000          	1000          	0            	0           	Open  	;
+ 56             	5                	6                	5000          	1000          	0            	0           	Open  	;
+ 65             	6                	5                	5000          	1000          	0            	0           	Open  	;
+ 512             	5                	12                	5000          	1000          	0            	0           	Open  	;
+ 125             	12                	5                	5000          	1000          	0            	0           	Open  	;
+ PWF55            	PWF5               	5                	5000          	1000          	0            	0           	Open  	;
+ 67             	6                	7                	5000          	1000          	0            	0           	Open  	;
+ 76             	7                	6                	5000          	1000          	0            	0           	Open  	;
+ 613             	6                	13                	5000          	1000          	0            	0           	Open  	;
+ 136             	13                	6                	5000          	1000          	0            	0           	Open  	;
+ 714               	7                	14                	5000          	1000          	0            	0           	Open  	;
+ 147             	14                	7                	5000          	1000          	0            	0           	Open  	;v
+ 1413             	14                	13                	5000          	1000          	0            	0           	Open  	;
+ 1314             	13                	14                	5000          	1000          	0            	0           	Open  	;
+ 1421             	14                	21                	5000          	1000          	0            	0           	Open  	;
+ 2114             	21                	14                	5000          	1000          	0            	0           	Open  	;
+ 1312             	13                	12                	5000          	1000          	0            	0           	Open  	;
+ 1213             	12                	13                	5000          	1000          	0            	0           	Open  	;
+ 1320             	13                	20                	5000          	1000          	0            	0           	Open  	;
+ 2013             	20                	13                	5000          	1000          	0            	0           	Open  	;
+ 1219             	12                	19                	5000          	1000          	0            	0           	Open  	;
+ 1912             	19                	12                	5000          	1000          	0            	0           	Open  	;
+ 1920             	19                	20                	5000          	1000          	0            	0           	Open  	;
+ 2019             	20                	19                	5000          	1000          	0            	0           	Open  	;
+ 2021             	20                	21                	5000          	1000          	0            	0           	Open  	;
+ 2120             	20                	21                	5000          	1000          	0            	0           	Open  	;
+ 1918             	19                	18                	5000          	1000          	0            	0           	Open  	;
+ 1819             	18                	19                	5000          	1000          	0            	0           	Open  	;
+ 1817             	18                	17                	5000          	1000          	0            	0           	Open  	;
+ 1718             	17                	18                	5000          	1000          	0            	0           	Open  	;
+ 1710             	17                	10                	5000          	1000          	0            	0           	Open  	;
+ 1017             	10                	17                	5000          	1000          	0            	0           	Open  	;
+ PWF1717            PWF17               17                	5000          	1000          	0            	0           	Open  	;
+ 103             	10                	3                	5000          	1000          	0            	0           	Open  	;
+ 310             	3                	10                	5000          	1000          	0            	0           	Open  	;
+ 109             	10                	9                	5000          	1000          	0            	0           	Open  	;
+ 910             	9                	10                	5000          	1000          	0            	0           	Open  	;
+ 89             	8                	9                	5000          	1000          	0            	0           	Open  	;
+ 98             	9                	8                	5000          	1000          	0            	0           	Open  	;
+ 1617             	16                	17                	5000          	1000          	0            	0           	Open  	;
+ 1716             	17                	16                	5000          	1000          	0            	0           	Open  	;
+ 1516             	15                	16                	5000          	1000          	0            	0           	Open  	;
+ 1615             	16                	15                	5000          	1000          	0            	0           	Open  	;
+ 158             	15                	8                	5000          	1000          	0            	0           	Open  	;
+ 815             	8                	15                	5000          	1000          	0            	0           	Open  	;
+ PWF2121            PWF21               21                	5000          	1000          	0            	0           	Open  	;
+
+[PUMPS]
+;ID              	Node1           	Node2           	Parameters
+
+[VALVES]
+;ID              	Node1           	Node2           	Diameter    	Type	Setting     	MinorLoss   
+ v12              	1               	2                 	1000            FCV 
+ v21              	2               	1                 	1000            FCV 
+ v18              	1               	8                 	1000            FCV
+ v81               	8           	    1               	1000            FCV
+ v23             	2                 	3                	1000            FCV
+ v32             	3                	2                	1000            FCV
+ v29             	2                	9                	1000            FCV
+ v92             	9                	2                	1000            FCV
+ v34             	3                	4                	1000            FCV
+ v43             	4                	3                	1000            FCV
+ v45             	4                	5                	1000            FCV
+ v54             	5                	4                	1000            FCV
+ v56             	5                	6                	1000            FCV
+ v65             	6                	5                	1000            FCV
+ v512             	5                	12                	1000            FCV
+ v125             	12                	5                   1000            FCV
+ v67             	6                	7                	1000            FCV	
+ v76             	7                	6                	1000            FCV
+ v613             	6                	13                	1000            FCV
+ v136             	13                	6                	1000            FCV
+ v714               7                	14                  1000            FCV
+ v147             	14                	7                	1000            FCV
+ v1413             	14                	13                	1000            FCV
+ v1314             	13                	14                	1000            FCV
+ v1421             	14                	21                  1000            FCV
+ v2114             	21                	14                	1000            FCV
+ v1312             	13                	12                	1000            FCV
+ v1213             	12                	13                	1000            FCV
+ v1320             	13                	20                	1000            FCV
+ v2013             	20                	13                	1000            FCV
+ v1219             	12                	19                	1000            FCV
+ v1912             	19                	12                	1000            FCV
+ v1920             	19                	20                	1000            FCV
+ v2019             	20                	19                	1000            FCV
+ v2021             	20                	21                	1000            FCV
+ v2120             	20                	21                	1000            FCV
+ v1918             	19                	18                	1000            FCV
+ v1819             	18                	19                	1000            FCV
+ v1817             	18                	17                	1000            FCV
+ v1718             	17                	18                	1000            FCV
+ v1710             	17                	10                	1000            FCV
+ v1017             	10                	17                	1000            FCV
+ v103             	10                	3                	1000            FCV
+ v310             	3                	10                	1000            FCV
+ v109             	10                	9                	1000            FCV
+ v910             	9                	10                	1000            FCV
+ v89             	8                	9                	1000            FCV
+ v98             	9                	8                	1000            FCV
+ v1617             	16                	17                	1000            FCV
+ v1716             	17                	16                	1000            FCV
+ v1516             	15                	16                	1000            FCV
+ v1615             	16                	15                	1000            FCV
+ v158             	15                	8                	1000            FCV
+ v815             	8                	15                	1000            FCV
+ vPWF33             PWF3                3                	1000            FCV
+ vPWF55             PWF5                5                	1000            FCV
+ vPWF1717           PWF17               17                	1000            FCV
+ vPWF2121           PWF21               21                	1000            FCV
+
+
+[TAGS]
+
+[DEMANDS]
+;Junction        	Demand      	Pattern         	Category
+
+[STATUS]
+;ID              	Status/Setting
+
+[PATTERNS]
+;ID              	Multipliers
+
+[CURVES]
+   
+[CONTROLS]
+
+[RULES]
+
+[ENERGY]
+
+[EMITTERS]
+;Junction        	Coefficient
+
+[QUALITY]
+;Node            	InitQual
+
+[SOURCES]
+;Node            	Type        	Quality     	Pattern
+
+[REACTIONS]
+;Type     	Pipe/Tank       	Coefficient
+
+
+[REACTIONS]
+ Order Bulk            	1
+ Order Tank            	1
+ Order Wall            	1
+ Global Bulk           	0.0
+ Global Wall           	0.0
+ Limiting Potential    	0.0
+ Roughness Correlation 	0.0
+
+[MIXING]
+;Tank            	Model
+
+[TIMES]
+ Duration           	168:00 
+ Hydraulic Timestep 	1:00 
+ Quality Timestep   	0:05 
+ Pattern Timestep   	1:00 
+ Pattern Start      	0:00 
+ Report Timestep    	1:00 
+ Report Start       	0:00 
+ Start ClockTime    	12 am
+ Statistic          	None
+
+[REPORT]
+ Status             	Yes
+ Summary            	No
+ Page               	0
+
+[OPTIONS]
+ Units              	GPM
+ Headloss           	H-W
+ Specific Gravity   	1.0
+ Viscosity          	1.0
+ Trials             	40
+ Accuracy           	0.001
+ CHECKFREQ          	2
+ MAXCHECK           	10
+ DAMPLIMIT          	0
+ Unbalanced         	Continue 10
+ Pattern            	1
+ Demand Multiplier  	1.0
+ Emitter Exponent   	0.5
+ Quality            	Trace Lake
+ Diffusivity        	1.0
+ Tolerance          	0.01
+
+[COORDINATES]
+;Node            	X-Coord           	Y-Coord
+1                 	0             	    0            
+2                 	5           	    0            
+3                 	10            	    0            
+PWF3              	10           	    0            
+4              	    15          	    0             
+5                 	20            	    0            
+PWF5                20                  0
+6                 	25            	    0            
+7                	30            	    0           
+8                 	0            	    5            
+9                	5            	    5            
+10               	10            	    5            
+12             	    20            	    5            
+13             	    25            	    5           
+14               	30            	    5            
+15               	0            	    10            
+16               	5               	10            
+17               	10            	    10            
+PWF17             	10            	    10            
+18               	15           	    10            
+19             	    20            	    10            
+20             	    25            	    10            
+21             	    30            	    10            
+PWF21             	30            	    10            
+
+
+[VERTICES]
+;Link            	X-Coord           	Y-Coord
+
+[LABELS]
+;X-Coord             Y-Coord             Label & Anchor Node
+8.000             	29.418            	"LAKE"	
+25.000            	31.100            	"RIVER"	
+
+[BACKDROP]
+  DIMENSIONS  	6.157             	-1.553            	46.703            	32.613            
+ UNITS          	None
+ FILE           	
+ OFFSET         	0.00            	0.00            
+
+[END]
