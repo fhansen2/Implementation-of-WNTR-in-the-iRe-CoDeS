@@ -193,15 +193,15 @@ def pattern_test():
                 calculated_base_demand = 0.086*shape[i]['Content'].get('BSU')
                 wn.add_junction('N'+str(i), base_demand = calculated_base_demand, coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
             else:
-                wn.add_junction('N'+str(i), base_demand=0, coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
+                wn.add_junction('N'+str(i), coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
             if ('PWF' in shape[i]['Content']):
                 calculated_supply = 0.2*shape[i]['Content'].get('PWF')
-                wn.add_reservoir('PWF'+str(i), coordinates=(shape[i]['Coord. X']+2,shape[i]['Coord. Y']+2))
+                wn.add_reservoir('PWF'+str(i), coordinates=(shape[i]['Coord. X']+2,shape[i]['Coord. Y']+2),)
                 add_pipes_to.append(str(i))
                 reservoir = wn.get_node('PWF'+str(i)) 
                 reservoir.head_timeseries.base_value = calculated_supply
         else:
-            wn.add_junction('N'+str(i), base_demand=0, coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
+            wn.add_junction('N'+str(i), coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
     
     for i in range(0,21):
         if (i == 10):
