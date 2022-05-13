@@ -1,4 +1,4 @@
-  Page 1                                    Fri May 13 13:27:55 2022
+  Page 1                                    Fri May 13 15:10:40 2022
 
   ******************************************************************
   *                           E P A N E T                          *
@@ -9,10 +9,10 @@
   
    
       Input Data File ................... temp.inp
-      Number of Junctions................ 20
+      Number of Junctions................ 74
       Number of Reservoirs............... 4
       Number of Tanks ................... 0
-      Number of Pipes ................... 62
+      Number of Pipes ................... 116
       Number of Pumps ................... 0
       Number of Valves .................. 54
       Headloss Formula .................. Hazen-Williams
@@ -33,35 +33,34 @@
          No Nodes
          No Links
    
-  Analysis begun Fri May 13 13:27:55 2022
+  Analysis begun Fri May 13 15:10:40 2022
 
-  WARNING: Negative pressures at 0:00:00 hrs.
-  WARNING: FCV v01 open but cannot deliver flow at 0:00:00 hrs.
-  WARNING: FCV v70 open but cannot deliver flow at 0:00:00 hrs.
-  WARNING: FCV v81 open but cannot deliver flow at 0:00:00 hrs.
-  WARNING: FCV v12 open but cannot deliver flow at 0:00:00 hrs.
-  WARNING: FCV v92 open but cannot deliver flow at 0:00:00 hrs.
-  WARNING: FCV v23 open but cannot deliver flow at 0:00:00 hrs.
-  WARNING: FCV v34 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v10 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v07 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v18 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v21 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v29 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v32 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v43 open but cannot deliver flow at 0:00:00 hrs.
   WARNING: FCV v411 open but cannot deliver flow at 0:00:00 hrs.
   WARNING: FCV v45 open but cannot deliver flow at 0:00:00 hrs.
   WARNING: FCV v56 open but cannot deliver flow at 0:00:00 hrs.
   WARNING: FCV v512 open but cannot deliver flow at 0:00:00 hrs.
   WARNING: FCV v613 open but cannot deliver flow at 0:00:00 hrs.
-  WARNING: FCV v78 open but cannot deliver flow at 0:00:00 hrs.
-  WARNING: FCV v147 open but cannot deliver flow at 0:00:00 hrs.
-  WARNING: FCV v98 open but cannot deliver flow at 0:00:00 hrs.
-  WARNING: FCV v169 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v87 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v714 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v89 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v916 open but cannot deliver flow at 0:00:00 hrs.
   WARNING: FCV v1118 open but cannot deliver flow at 0:00:00 hrs.
   WARNING: FCV v1112 open but cannot deliver flow at 0:00:00 hrs.
   WARNING: FCV v1213 open but cannot deliver flow at 0:00:00 hrs.
   WARNING: FCV v1219 open but cannot deliver flow at 0:00:00 hrs.
   WARNING: FCV v1320 open but cannot deliver flow at 0:00:00 hrs.
-  WARNING: FCV v1514 open but cannot deliver flow at 0:00:00 hrs.
-  WARNING: FCV v1615 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v1415 open but cannot deliver flow at 0:00:00 hrs.
+  WARNING: FCV v1516 open but cannot deliver flow at 0:00:00 hrs.
   WARNING: FCV v1617 open but cannot deliver flow at 0:00:00 hrs.
   WARNING: FCV v1718 open but cannot deliver flow at 0:00:00 hrs.
   WARNING: FCV v1819 open but cannot deliver flow at 0:00:00 hrs.
   WARNING: FCV v1920 open but cannot deliver flow at 0:00:00 hrs.
    
-  Analysis ended Fri May 13 13:27:55 2022
+  Analysis ended Fri May 13 15:10:40 2022

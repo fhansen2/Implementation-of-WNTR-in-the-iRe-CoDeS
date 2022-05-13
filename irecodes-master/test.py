@@ -147,7 +147,7 @@ potential_paths['CoolingWaterTransferService'] = potential_paths['ElectricPowerT
 potential_paths['PotableWaterTransferService'] = potential_paths['ElectricPowerTransferService']
 
 # %% Define damage - use the same damage as in the iReCoDeS paper
-# damage_vector = np.random.rand(117)
+ #damage_vector = np.random.rand(117)
 ## initial damage
 damage_vector = [0.27, 0.35, 0.27, 0.35, 0.19, 0.47, 0.25, 0.15, 0.25, 0.15, 0.34, 0.49, 0.42, 0.44, 
                  0.44, 0.03, 0.55, 0.45, 0.45, 0.45, 0.45, 0.42, 0.45, 0.06, 0.06, 0.19, 0.53, 0.13, 
@@ -181,7 +181,7 @@ def test():
 
 #test()
 
-def pattern_test():
+def pattern_test_no_damage():
     
     wn = wntr.network.WaterNetworkModel()
     add_pipes_to = []
@@ -196,7 +196,7 @@ def pattern_test():
                 wn.add_junction('N'+str(i), coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
             if ('PWF' in shape[i]['Content']):
                 calculated_supply = 0.2*shape[i]['Content'].get('PWF')
-                wn.add_reservoir('PWF'+str(i), coordinates=(shape[i]['Coord. X']+2,shape[i]['Coord. Y']+2),)
+                wn.add_reservoir('PWF'+str(i), coordinates=(shape[i]['Coord. X']+2,shape[i]['Coord. Y']+2),base_head= 800)
                 add_pipes_to.append(str(i))
                 reservoir = wn.get_node('PWF'+str(i)) 
                 reservoir.head_timeseries.base_value = calculated_supply
@@ -224,21 +224,85 @@ def pattern_test():
     wntr.graphics.plot_network(wn, node_alpha=0, node_labels=True, title='Case Study Network', link_alpha=0, node_attribute = 'base_demand', node_colorbar_label='Base Demand (Ml pro Tag)')
     
 
+
     #Simulate hydraulics
     sim = wntr.sim.EpanetSimulator(wn)
     results = sim.run_sim()
+
+
     #node_keys = results.node.keys()
     #print(node_keys) 
-    demand = results.node['demand']
+    demand = results.link['flowrate']
     print(demand.head())
 
-pattern_test()
 
-#shape[id][atrtribute] = value
-# lengths = [x,y,z,..] 
-# for i in range(0,21):
-#    shape[i][length] = lenghts[i]
+    
 
-#def demand(): # for the nodes in which there is a BSU there is a demand. the demand = 0.086 [Ml/d] * # of BSU
- #   for i in range(0,21):
-  #      shape[i]['Content'] = BSU
+#pattern_test_no_damage()
+
+
+def pattern_test_immediately_damage():
+    dwert = 0
+    wn = wntr.network.WaterNetworkModel()
+    add_pipes_to = []
+    for i in range(0,21):
+        if (i == 10):
+            continue
+        if (len(shape[i]['Content']) != 0):
+            if ('BSU' in shape[i]['Content']):
+                calculated_base_demand = 0.086*shape[i]['Content'].get('BSU')
+                calculated_base_demand *= damage_vector[dwert]
+                dwert+=1
+                wn.add_junction('N'+str(i), base_demand = calculated_base_demand, coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
+            else:
+                wn.add_junction('N'+str(i), coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
+            if ('PWF' in shape[i]['Content']):
+                calculated_supply = 0.2*shape[i]['Content'].get('PWF')
+                calculated_base_demand *= damage_vector[dwert]
+                dwert+=1
+                wn.add_reservoir('PWF'+str(i), coordinates=(shape[i]['Coord. X']+2,shape[i]['Coord. Y']+2), base_head= 800)
+                add_pipes_to.append(str(i))
+                reservoir = wn.get_node('PWF'+str(i)) 
+                reservoir.head_timeseries.base_value = calculated_supply
+        else:
+            wn.add_junction('N'+str(i), coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
+    
+    for i in range(0,21):
+        if (i == 10):
+            continue
+        values = shape[i]['LinkTo'].get('PWP') # focus on PWP
+        for linkto in values:
+            wn.add_pipe('f'+str(i)+'t'+str(linkto-1),'N'+str(i),'N'+str(linkto-1))
+            wn = wntr.morph.split_pipe(wn,'f'+str(i)+'t'+str(linkto-1), 'f'+str(i)+'t'+str(linkto-1)+'_L', 'f'+str(i)+'t'+str(linkto-1)+'Leak' )
+            pipe = wn.get_node('f'+str(i)+'t'+str(linkto-1)+'Leak')
+            calculated_discharge_coeff = 1 - damage_vector[dwert]
+            dwert+=1
+            pipe.add_leak(wn, discharge_coeff=calculated_discharge_coeff, area=0)
+        for res in add_pipes_to:
+            wn.add_pipe('fr'+str(res)+'tn'+str(res),'PWF'+str(res),'N'+str(res))
+
+            wn.add_pipe('fn'+str(res)+'tr'+str(res),'N'+str(res),'PWF'+str(res))
+
+    for i in range(0,21):
+        if (i == 10):
+            continue
+        values = shape[i]['LinkTo'].get('PWP') # focus on PWP
+        for linkto in values:
+            wn.add_valve('v' + str(i) + str(linkto-1),'N'+str(i),'N'+str(linkto-1), valve_type='FCV')
+            wn.add_valve('v' + str(linkto-1) + str(i),'N'+str(linkto-1),'N'+str(i), valve_type='FCV')
+    
+    wntr.graphics.plot_network(wn, node_alpha=0, node_labels=True, title='Case Study Network', link_alpha=0, node_attribute = 'base_demand', node_colorbar_label='Base Demand (Ml pro Tag)')
+    
+
+
+    #Simulate hydraulics
+    sim = wntr.sim.EpanetSimulator(wn)
+    results = sim.run_sim()
+
+
+    #node_keys = results.node.keys()
+    #print(node_keys) 
+    demand = results.link['flowrate']
+    print(demand.head())
+pattern_test_no_damage()
+pattern_test_immediately_damage()
