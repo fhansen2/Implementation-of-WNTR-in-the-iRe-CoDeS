@@ -190,13 +190,16 @@ def pattern_test_no_damage():
             continue
         if (len(shape[i]['Content']) != 0):
             if ('BSU' in shape[i]['Content']):
-                calculated_base_demand = 0.086*shape[i]['Content'].get('BSU')
+                calculated_base_demand = 0.086*shape[i]['Content'].get('BSU')*0.011574074074074 # conversion from ML/d to m^3/s
                 wn.add_junction('N'+str(i), base_demand = calculated_base_demand, coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
+                #wn.add_junction('N'+str(i), coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
+
             else:
                 wn.add_junction('N'+str(i), coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
             if ('PWF' in shape[i]['Content']):
-                calculated_supply = 0.2*shape[i]['Content'].get('PWF')
-                wn.add_reservoir('PWF'+str(i), coordinates=(shape[i]['Coord. X']+2,shape[i]['Coord. Y']+2),base_head= 800)
+                calculated_supply = 0.2*shape[i]['Content'].get('PWF')*0.011574074074074 # conversion from ML/d to m^3/s 
+                #wn.add_junction('PWF'+str(i), base_demand = calculated_supply, coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))-> from Epanet QA : model tank as junction with negative base_demand
+                wn.add_reservoir('PWF'+str(i), coordinates=(shape[i]['Coord. X']+2,shape[i]['Coord. Y']+2))#, base_head= 100)
                 add_pipes_to.append(str(i))
                 reservoir = wn.get_node('PWF'+str(i)) 
                 reservoir.head_timeseries.base_value = calculated_supply
@@ -221,24 +224,19 @@ def pattern_test_no_damage():
             wn.add_valve('v' + str(i) + str(linkto-1),'N'+str(i),'N'+str(linkto-1), valve_type='FCV')
             wn.add_valve('v' + str(linkto-1) + str(i),'N'+str(linkto-1),'N'+str(i), valve_type='FCV')
     
-    wntr.graphics.plot_network(wn, node_alpha=0, node_labels=True, title='Case Study Network', link_alpha=0, node_attribute = 'base_demand', node_colorbar_label='Base Demand (Ml pro Tag)')
-    
-
+    wntr.graphics.plot_network(wn, node_alpha=0, node_labels=True, title='Case Study Network', link_alpha=0, node_attribute = 'base_demand', node_colorbar_label='Base Demand (Ml pro Tag)')  
 
     #Simulate hydraulics
-    sim = wntr.sim.EpanetSimulator(wn)
+    wn.options.hydraulic.demand_model = 'PDD' # PDD or DD
+    sim = wntr.sim.WNTRSimulator(wn)
     results = sim.run_sim()
-
 
     #node_keys = results.node.keys()
     #print(node_keys) 
     demand = results.link['flowrate']
     print(demand.head())
 
-
-    
-
-#pattern_test_no_damage()
+pattern_test_no_damage()
 
 
 def pattern_test_immediately_damage():
@@ -292,9 +290,7 @@ def pattern_test_immediately_damage():
             wn.add_valve('v' + str(linkto-1) + str(i),'N'+str(linkto-1),'N'+str(i), valve_type='FCV')
     
     wntr.graphics.plot_network(wn, node_alpha=0, node_labels=True, title='Case Study Network', link_alpha=0, node_attribute = 'base_demand', node_colorbar_label='Base Demand (Ml pro Tag)')
-    
-
-
+   
     #Simulate hydraulics
     sim = wntr.sim.EpanetSimulator(wn)
     results = sim.run_sim()
@@ -304,5 +300,5 @@ def pattern_test_immediately_damage():
     #print(node_keys) 
     demand = results.link['flowrate']
     print(demand.head())
-pattern_test_no_damage()
-pattern_test_immediately_damage()
+
+#pattern_test_immediately_damage()
