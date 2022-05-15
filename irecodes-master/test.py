@@ -185,6 +185,7 @@ def pattern_test_no_damage():
     
     wn = wntr.network.WaterNetworkModel()
     add_pipes_to = []
+    supply_pwf = 0
     for i in range(0,21):
         if (i == 10):
             continue
@@ -192,17 +193,24 @@ def pattern_test_no_damage():
             if ('BSU' in shape[i]['Content']):
                 calculated_base_demand = 0.086*shape[i]['Content'].get('BSU')*0.011574074074074 # conversion from ML/d to m^3/s
                 wn.add_junction('N'+str(i), base_demand = calculated_base_demand, coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
-                #wn.add_junction('N'+str(i), coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
 
             else:
                 wn.add_junction('N'+str(i), coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
             if ('PWF' in shape[i]['Content']):
-                calculated_supply = 0.2*shape[i]['Content'].get('PWF')*0.011574074074074 # conversion from ML/d to m^3/s 
-                #wn.add_junction('PWF'+str(i), base_demand = calculated_supply, coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))-> from Epanet QA : model tank as junction with negative base_demand
-                wn.add_reservoir('PWF'+str(i), coordinates=(shape[i]['Coord. X']+2,shape[i]['Coord. Y']+2))#, base_head= 100)
+                ## PWF as junction with negative base_demand:
+                #calculated_supply = -0.2*shape[i]['Content'].get('PWF')*0.011574074074074 # conversion from ML/d to m^3/s 
+                #wn.add_junction('PWF'+str(i), base_demand = calculated_supply, coordinates=(shape[i]['Coord. X']+2,shape[i]['Coord. Y']+2), elevation = 25) #-> from Epanet QA : model tank as junction with negative base_demand
+                #add_pipes_to.append(str(i))
+                #-> gives 0 demand and pressure. problably beacuse EPANET requires at least one reservoir or tank
+
+                ## PWF as reservoir: 
+                calculated_supply = 0.2*shape[i]['Content'].get('PWF')#*0.011574074074074 # conversion from ML/d to m^3/s 
+                supply_pwf += calculated_supply
+                wn.add_reservoir('PWF'+str(i), coordinates=(shape[i]['Coord. X']+2,shape[i]['Coord. Y']+2), base_head= 800)
                 add_pipes_to.append(str(i))
                 reservoir = wn.get_node('PWF'+str(i)) 
                 reservoir.head_timeseries.base_value = calculated_supply
+                #wn.add_pump('Pump'+str(i), 'PWF'+ str(i),'N'+str(i))
         else:
             wn.add_junction('N'+str(i), coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
     
@@ -211,10 +219,10 @@ def pattern_test_no_damage():
             continue
         values = shape[i]['LinkTo'].get('PWP') # focus on PWP
         for linkto in values:
-            wn.add_pipe('f'+str(i)+'t'+str(linkto-1),'N'+str(i),'N'+str(linkto-1))
+            wn.add_pipe('f'+str(i)+'t'+str(linkto-1),'N'+str(i),'N'+str(linkto-1),diameter =10) # Default pipe diameter = 0.3046m -> increased in order to simulate infinite transfer capacity of pipes
         for res in add_pipes_to:
-            wn.add_pipe('fr'+str(res)+'tn'+str(res),'PWF'+str(res),'N'+str(res))
-            wn.add_pipe('fn'+str(res)+'tr'+str(res),'N'+str(res),'PWF'+str(res))
+            wn.add_pipe('fr'+str(res)+'tn'+str(res),'PWF'+str(res),'N'+str(res),diameter =10) 
+            wn.add_pipe('fn'+str(res)+'tr'+str(res),'N'+str(res),'PWF'+str(res),diameter = 10)
 
     for i in range(0,21):
         if (i == 10):
@@ -228,16 +236,34 @@ def pattern_test_no_damage():
 
     #Simulate hydraulics
     wn.options.hydraulic.demand_model = 'PDD' # PDD or DD
-    sim = wntr.sim.WNTRSimulator(wn)
+    sim = wntr.sim.WNTRSimulator(wn)    # WNTRSimulator or EpanetSimulator
     results = sim.run_sim()
+    pressure = results.node['pressure']
+    required_pressure = wn.options.hydraulic.required_pressure
 
-    #node_keys = results.node.keys()
-    #print(node_keys) 
-    demand = results.link['flowrate']
+    ## Check flow of water: if pressure < required_pressure -> junction will not receive full water demand
+    for i in range(0,21):
+        if (i == 10):
+            continue
+        if (pressure.loc[:,'N'+str(i)][0] < required_pressure):
+            print('Demand not met in junction'+str(i))
+        else:
+            print('Demand met in junction'+str(i))
+
+    demand = results.node['demand']
+    pwfs = [2,4,16,20]
+    total_pwf_supply = 0
+    for i in pwfs:
+        total_pwf_supply += demand.loc[:,'PWF'+str(i)][0]
+    if (total_pwf_supply < supply_pwf):
+        print("Supply can be met")
+    else:
+        print("fuck supply not met")
+    demand = results.node['demand'] #get.node for demand, pressure, leak demand, head or get.link for the velocity, flowrate, headloss
     print(demand.head())
+    demand.to_excel('demand.xlsx')
 
 pattern_test_no_damage()
-
 
 def pattern_test_immediately_damage():
     dwert = 0
