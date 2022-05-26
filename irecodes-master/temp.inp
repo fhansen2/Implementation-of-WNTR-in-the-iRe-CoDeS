@@ -4,11 +4,11 @@
 ;ID                      Elevation       Demand Pattern                 
  N0                                 0               0                            ;
  N1                                 0               0                            ;
- N2                                 0    31.553884032                            ;
- PWFN2                              0   -36.690562828                            ;
+ N2                                 0    37.549121998                            ;
+ PWFn2                              0   -36.690562828                            ;
  N3                                 0               0                            ;
- N4                                 0    47.330826048                            ;
- PWFN4                              0   -36.690562828                            ;
+ N4                                 0    52.537216913                            ;
+ PWFn4                              0   -36.690562828                            ;
  N5                                 0               0                            ;
  N6                                 0               0                            ;
  N7                                 0               0                            ;
@@ -19,91 +19,207 @@
  N13                                0               0                            ;
  N14                                0               0                            ;
  N15                                0               0                            ;
- N16                                0    47.330826048                            ;
- PWFN16                             0   -36.690562828                            ;
+ N16                                0    56.323682997                            ;
+ PWFn16                             0   -36.690562828                            ;
  N17                                0               0                            ;
  N18                                0               0                            ;
  N19                                0               0                            ;
- N20                                0    15.776942016                            ;
- PWFN20                             0   -36.690562828                            ;
+ N20                                0    17.512405638                            ;
+ PWFn20                             0   -36.690562828                            ;
+ f0t1Leak                           0               0                            ;
+ f0t7Leak                           0               0                            ;
+ f1t0Leak                           0               0                            ;
+ f1t8Leak                           0               0                            ;
+ f1t2Leak                           0               0                            ;
+ f2t1Leak                           0               0                            ;
+ f2t9Leak                           0               0                            ;
+ f2t3Leak                           0               0                            ;
+ f3t2Leak                           0               0                            ;
+ f3t4Leak                           0               0                            ;
+ f4t3Leak                           0               0                            ;
+ f4t11Leak                          0               0                            ;
+ f4t5Leak                           0               0                            ;
+ f5t4Leak                           0               0                            ;
+ f5t6Leak                           0               0                            ;
+ f5t12Leak                          0               0                            ;
+ f6t5Leak                           0               0                            ;
+ f6t13Leak                          0               0                            ;
+ f7t0Leak                           0               0                            ;
+ f7t8Leak                           0               0                            ;
+ f7t14Leak                          0               0                            ;
+ f8t7Leak                           0               0                            ;
+ f8t1Leak                           0               0                            ;
+ f8t9Leak                           0               0                            ;
+ f9t2Leak                           0               0                            ;
+ f9t8Leak                           0               0                            ;
+ f9t16Leak                          0               0                            ;
+ f11t4Leak                          0               0                            ;
+ f11t18Leak                         0               0                            ;
+ f11t12Leak                         0               0                            ;
+ f12t5Leak                          0               0                            ;
+ f12t11Leak                         0               0                            ;
+ f12t13Leak                         0               0                            ;
+ f12t19Leak                         0               0                            ;
+ f13t6Leak                          0               0                            ;
+ f13t12Leak                         0               0                            ;
+ f13t20Leak                         0               0                            ;
+ f14t7Leak                          0               0                            ;
+ f14t15Leak                         0               0                            ;
+ f15t14Leak                         0               0                            ;
+ f15t16Leak                         0               0                            ;
+ f16t9Leak                          0               0                            ;
+ f16t15Leak                         0               0                            ;
+ f16t17Leak                         0               0                            ;
+ f17t16Leak                         0               0                            ;
+ f17t18Leak                         0               0                            ;
+ f18t17Leak                         0               0                            ;
+ f18t11Leak                         0               0                            ;
+ f18t19Leak                         0               0                            ;
+ f19t18Leak                         0               0                            ;
+ f19t12Leak                         0               0                            ;
+ f19t20Leak                         0               0                            ;
+ f20t13Leak                         0               0                            ;
+ f20t19Leak                         0               0                            ;
 
 [RESERVOIRS]
 ;ID                                   Head                  Pattern
- PWF2                               0                            ;
- PWF4                               0                            ;
- PWF16                              0                            ;
- PWF20                              0                            ;
+ RES2                               0                            ;
+ RES4                               0                            ;
+ RES16                              0                            ;
+ RES20                              0                            ;
 
 [TANKS]
 ;ID                              Elevation           Init Level            Min Level            Max Level             Diameter           Min Volume Volume Curve         Overflow            
 
 [PIPES]
 ;ID                   Node1                Node2                              Length             Diameter            Roughness           Minor Loss               Status
- f0t1                 N0                   N1                              1000     393.7007874             100               0                 Open   ;
- f0t7                 N0                   N7                              1000     393.7007874             100               0                 Open   ;
- fn2tr2               N2                   PWFN2                           1000     393.7007874             100               0                 Open   ;
- fn4tr4               N4                   PWFN4                           1000     393.7007874             100               0                 Open   ;
- fn16tr16             N16                  PWFN16                          1000     393.7007874             100               0                 Open   ;
- fn20tr20             N20                  PWFN20                          1000     393.7007874             100               0                 Open   ;
- f1t0                 N1                   N0                              1000     393.7007874             100               0                 Open   ;
- f1t8                 N1                   N8                              1000     393.7007874             100               0                 Open   ;
- f1t2                 N1                   N2                              1000     393.7007874             100               0                 Open   ;
- f2t1                 N2                   N1                              1000     393.7007874             100               0                 Open   ;
- f2t9                 N2                   N9                              1000     393.7007874             100               0                 Open   ;
- f2t3                 N2                   N3                              1000     393.7007874             100               0                 Open   ;
- f3t2                 N3                   N2                              1000     393.7007874             100               0                 Open   ;
- f3t4                 N3                   N4                              1000     393.7007874             100               0                 Open   ;
- f4t3                 N4                   N3                              1000     393.7007874             100               0                 Open   ;
- f4t11                N4                   N11                             1000     393.7007874             100               0                 Open   ;
- f4t5                 N4                   N5                              1000     393.7007874             100               0                 Open   ;
- f5t4                 N5                   N4                              1000     393.7007874             100               0                 Open   ;
- f5t6                 N5                   N6                              1000     393.7007874             100               0                 Open   ;
- f5t12                N5                   N12                             1000     393.7007874             100               0                 Open   ;
- f6t5                 N6                   N5                              1000     393.7007874             100               0                 Open   ;
- f6t13                N6                   N13                             1000     393.7007874             100               0                 Open   ;
- f7t0                 N7                   N0                              1000     393.7007874             100               0                 Open   ;
- f7t8                 N7                   N8                              1000     393.7007874             100               0                 Open   ;
- f7t14                N7                   N14                             1000     393.7007874             100               0                 Open   ;
- f8t7                 N8                   N7                              1000     393.7007874             100               0                 Open   ;
- f8t1                 N8                   N1                              1000     393.7007874             100               0                 Open   ;
- f8t9                 N8                   N9                              1000     393.7007874             100               0                 Open   ;
- f9t2                 N9                   N2                              1000     393.7007874             100               0                 Open   ;
- f9t8                 N9                   N8                              1000     393.7007874             100               0                 Open   ;
- f9t16                N9                   N16                             1000     393.7007874             100               0                 Open   ;
- f11t4                N11                  N4                              1000     393.7007874             100               0                 Open   ;
- f11t18               N11                  N18                             1000     393.7007874             100               0                 Open   ;
- f11t12               N11                  N12                             1000     393.7007874             100               0                 Open   ;
- f12t5                N12                  N5                              1000     393.7007874             100               0                 Open   ;
- f12t11               N12                  N11                             1000     393.7007874             100               0                 Open   ;
- f12t13               N12                  N13                             1000     393.7007874             100               0                 Open   ;
- f12t19               N12                  N19                             1000     393.7007874             100               0                 Open   ;
- f13t6                N13                  N6                              1000     393.7007874             100               0                 Open   ;
- f13t12               N13                  N12                             1000     393.7007874             100               0                 Open   ;
- f13t20               N13                  N20                             1000     393.7007874             100               0                 Open   ;
- f14t7                N14                  N7                              1000     393.7007874             100               0                 Open   ;
- f14t15               N14                  N15                             1000     393.7007874             100               0                 Open   ;
- f15t14               N15                  N14                             1000     393.7007874             100               0                 Open   ;
- f15t16               N15                  N16                             1000     393.7007874             100               0                 Open   ;
- f16t9                N16                  N9                              1000     393.7007874             100               0                 Open   ;
- f16t15               N16                  N15                             1000     393.7007874             100               0                 Open   ;
- f16t17               N16                  N17                             1000     393.7007874             100               0                 Open   ;
- f17t16               N17                  N16                             1000     393.7007874             100               0                 Open   ;
- f17t18               N17                  N18                             1000     393.7007874             100               0                 Open   ;
- f18t17               N18                  N17                             1000     393.7007874             100               0                 Open   ;
- f18t11               N18                  N11                             1000     393.7007874             100               0                 Open   ;
- f18t19               N18                  N19                             1000     393.7007874             100               0                 Open   ;
- f19t18               N19                  N18                             1000     393.7007874             100               0                 Open   ;
- f19t12               N19                  N12                             1000     393.7007874             100               0                 Open   ;
- f19t20               N19                  N20                             1000     393.7007874             100               0                 Open   ;
- f20t13               N20                  N13                             1000     393.7007874             100               0                 Open   ;
- f20t19               N20                  N19                             1000     393.7007874             100               0                 Open   ;
+ f0t1                 N0                   f0t1Leak                         500     393.7007874             100               0                 Open   ;
+ f0t1_L               f0t1Leak             N1                               500     393.7007874             100               0                 Open   ;
+ f0t7                 N0                   f0t7Leak                         500     393.7007874             100               0                 Open   ;
+ f0t7_L               f0t7Leak             N7                               500     393.7007874             100               0                 Open   ;
+ RES2PWFn2            RES2                 PWFn2                           1000              12             100               0                 Open   ;
+ PWFn2tr2             PWFn2                N2                              1000              12             100               0                 Open   ;
+ fn2PWFn2             N2                   PWFn2                           1000              12             100               0                 Open   ;
+ RES4PWFn4            RES4                 PWFn4                           1000              12             100               0                 Open   ;
+ PWFn4tr4             PWFn4                N4                              1000              12             100               0                 Open   ;
+ fn4PWFn4             N4                   PWFn4                           1000              12             100               0                 Open   ;
+ RES16PWFn16          RES16                PWFn16                          1000              12             100               0                 Open   ;
+ PWFn16tr16           PWFn16               N16                             1000              12             100               0                 Open   ;
+ fn16PWFn16           N16                  PWFn16                          1000              12             100               0                 Open   ;
+ RES20PWFn20          RES20                PWFn20                          1000              12             100               0                 Open   ;
+ PWFn20tr20           PWFn20               N20                             1000              12             100               0                 Open   ;
+ fn20PWFn20           N20                  PWFn20                          1000              12             100               0                 Open   ;
+ f1t0                 N1                   f1t0Leak                         500     393.7007874             100               0                 Open   ;
+ f1t0_L               f1t0Leak             N0                               500     393.7007874             100               0                 Open   ;
+ f1t8                 N1                   f1t8Leak                         500     393.7007874             100               0                 Open   ;
+ f1t8_L               f1t8Leak             N8                               500     393.7007874             100               0                 Open   ;
+ f1t2                 N1                   f1t2Leak                         500     393.7007874             100               0                 Open   ;
+ f1t2_L               f1t2Leak             N2                               500     393.7007874             100               0                 Open   ;
+ f2t1                 N2                   f2t1Leak                         500     393.7007874             100               0                 Open   ;
+ f2t1_L               f2t1Leak             N1                               500     393.7007874             100               0                 Open   ;
+ f2t9                 N2                   f2t9Leak                         500     393.7007874             100               0                 Open   ;
+ f2t9_L               f2t9Leak             N9                               500     393.7007874             100               0                 Open   ;
+ f2t3                 N2                   f2t3Leak                         500     393.7007874             100               0                 Open   ;
+ f2t3_L               f2t3Leak             N3                               500     393.7007874             100               0                 Open   ;
+ f3t2                 N3                   f3t2Leak                         500     393.7007874             100               0                 Open   ;
+ f3t2_L               f3t2Leak             N2                               500     393.7007874             100               0                 Open   ;
+ f3t4                 N3                   f3t4Leak                         500     393.7007874             100               0                 Open   ;
+ f3t4_L               f3t4Leak             N4                               500     393.7007874             100               0                 Open   ;
+ f4t3                 N4                   f4t3Leak                         500     393.7007874             100               0                 Open   ;
+ f4t3_L               f4t3Leak             N3                               500     393.7007874             100               0                 Open   ;
+ f4t11                N4                   f4t11Leak                        500     393.7007874             100               0                 Open   ;
+ f4t11_L              f4t11Leak            N11                              500     393.7007874             100               0                 Open   ;
+ f4t5                 N4                   f4t5Leak                         500     393.7007874             100               0                 Open   ;
+ f4t5_L               f4t5Leak             N5                               500     393.7007874             100               0                 Open   ;
+ f5t4                 N5                   f5t4Leak                         500     393.7007874             100               0                 Open   ;
+ f5t4_L               f5t4Leak             N4                               500     393.7007874             100               0                 Open   ;
+ f5t6                 N5                   f5t6Leak                         500     393.7007874             100               0                 Open   ;
+ f5t6_L               f5t6Leak             N6                               500     393.7007874             100               0                 Open   ;
+ f5t12                N5                   f5t12Leak                        500     393.7007874             100               0                 Open   ;
+ f5t12_L              f5t12Leak            N12                              500     393.7007874             100               0                 Open   ;
+ f6t5                 N6                   f6t5Leak                         500     393.7007874             100               0                 Open   ;
+ f6t5_L               f6t5Leak             N5                               500     393.7007874             100               0                 Open   ;
+ f6t13                N6                   f6t13Leak                        500     393.7007874             100               0                 Open   ;
+ f6t13_L              f6t13Leak            N13                              500     393.7007874             100               0                 Open   ;
+ f7t0                 N7                   f7t0Leak                         500     393.7007874             100               0                 Open   ;
+ f7t0_L               f7t0Leak             N0                               500     393.7007874             100               0                 Open   ;
+ f7t8                 N7                   f7t8Leak                         500     393.7007874             100               0                 Open   ;
+ f7t8_L               f7t8Leak             N8                               500     393.7007874             100               0                 Open   ;
+ f7t14                N7                   f7t14Leak                        500     393.7007874             100               0                 Open   ;
+ f7t14_L              f7t14Leak            N14                              500     393.7007874             100               0                 Open   ;
+ f8t7                 N8                   f8t7Leak                         500     393.7007874             100               0                 Open   ;
+ f8t7_L               f8t7Leak             N7                               500     393.7007874             100               0                 Open   ;
+ f8t1                 N8                   f8t1Leak                         500     393.7007874             100               0                 Open   ;
+ f8t1_L               f8t1Leak             N1                               500     393.7007874             100               0                 Open   ;
+ f8t9                 N8                   f8t9Leak                         500     393.7007874             100               0                 Open   ;
+ f8t9_L               f8t9Leak             N9                               500     393.7007874             100               0                 Open   ;
+ f9t2                 N9                   f9t2Leak                         500     393.7007874             100               0                 Open   ;
+ f9t2_L               f9t2Leak             N2                               500     393.7007874             100               0                 Open   ;
+ f9t8                 N9                   f9t8Leak                         500     393.7007874             100               0                 Open   ;
+ f9t8_L               f9t8Leak             N8                               500     393.7007874             100               0                 Open   ;
+ f9t16                N9                   f9t16Leak                        500     393.7007874             100               0                 Open   ;
+ f9t16_L              f9t16Leak            N16                              500     393.7007874             100               0                 Open   ;
+ f11t4                N11                  f11t4Leak                        500     393.7007874             100               0                 Open   ;
+ f11t4_L              f11t4Leak            N4                               500     393.7007874             100               0                 Open   ;
+ f11t18               N11                  f11t18Leak                       500     393.7007874             100               0                 Open   ;
+ f11t18_L             f11t18Leak           N18                              500     393.7007874             100               0                 Open   ;
+ f11t12               N11                  f11t12Leak                       500     393.7007874             100               0                 Open   ;
+ f11t12_L             f11t12Leak           N12                              500     393.7007874             100               0                 Open   ;
+ f12t5                N12                  f12t5Leak                        500     393.7007874             100               0                 Open   ;
+ f12t5_L              f12t5Leak            N5                               500     393.7007874             100               0                 Open   ;
+ f12t11               N12                  f12t11Leak                       500     393.7007874             100               0                 Open   ;
+ f12t11_L             f12t11Leak           N11                              500     393.7007874             100               0                 Open   ;
+ f12t13               N12                  f12t13Leak                       500     393.7007874             100               0                 Open   ;
+ f12t13_L             f12t13Leak           N13                              500     393.7007874             100               0                 Open   ;
+ f12t19               N12                  f12t19Leak                       500     393.7007874             100               0                 Open   ;
+ f12t19_L             f12t19Leak           N19                              500     393.7007874             100               0                 Open   ;
+ f13t6                N13                  f13t6Leak                        500     393.7007874             100               0                 Open   ;
+ f13t6_L              f13t6Leak            N6                               500     393.7007874             100               0                 Open   ;
+ f13t12               N13                  f13t12Leak                       500     393.7007874             100               0                 Open   ;
+ f13t12_L             f13t12Leak           N12                              500     393.7007874             100               0                 Open   ;
+ f13t20               N13                  f13t20Leak                       500     393.7007874             100               0                 Open   ;
+ f13t20_L             f13t20Leak           N20                              500     393.7007874             100               0                 Open   ;
+ f14t7                N14                  f14t7Leak                        500     393.7007874             100               0                 Open   ;
+ f14t7_L              f14t7Leak            N7                               500     393.7007874             100               0                 Open   ;
+ f14t15               N14                  f14t15Leak                       500     393.7007874             100               0                 Open   ;
+ f14t15_L             f14t15Leak           N15                              500     393.7007874             100               0                 Open   ;
+ f15t14               N15                  f15t14Leak                       500     393.7007874             100               0                 Open   ;
+ f15t14_L             f15t14Leak           N14                              500     393.7007874             100               0                 Open   ;
+ f15t16               N15                  f15t16Leak                       500     393.7007874             100               0                 Open   ;
+ f15t16_L             f15t16Leak           N16                              500     393.7007874             100               0                 Open   ;
+ f16t9                N16                  f16t9Leak                        500     393.7007874             100               0                 Open   ;
+ f16t9_L              f16t9Leak            N9                               500     393.7007874             100               0                 Open   ;
+ f16t15               N16                  f16t15Leak                       500     393.7007874             100               0                 Open   ;
+ f16t15_L             f16t15Leak           N15                              500     393.7007874             100               0                 Open   ;
+ f16t17               N16                  f16t17Leak                       500     393.7007874             100               0                 Open   ;
+ f16t17_L             f16t17Leak           N17                              500     393.7007874             100               0                 Open   ;
+ f17t16               N17                  f17t16Leak                       500     393.7007874             100               0                 Open   ;
+ f17t16_L             f17t16Leak           N16                              500     393.7007874             100               0                 Open   ;
+ f17t18               N17                  f17t18Leak                       500     393.7007874             100               0                 Open   ;
+ f17t18_L             f17t18Leak           N18                              500     393.7007874             100               0                 Open   ;
+ f18t17               N18                  f18t17Leak                       500     393.7007874             100               0                 Open   ;
+ f18t17_L             f18t17Leak           N17                              500     393.7007874             100               0                 Open   ;
+ f18t11               N18                  f18t11Leak                       500     393.7007874             100               0                 Open   ;
+ f18t11_L             f18t11Leak           N11                              500     393.7007874             100               0                 Open   ;
+ f18t19               N18                  f18t19Leak                       500     393.7007874             100               0                 Open   ;
+ f18t19_L             f18t19Leak           N19                              500     393.7007874             100               0                 Open   ;
+ f19t18               N19                  f19t18Leak                       500     393.7007874             100               0                 Open   ;
+ f19t18_L             f19t18Leak           N18                              500     393.7007874             100               0                 Open   ;
+ f19t12               N19                  f19t12Leak                       500     393.7007874             100               0                 Open   ;
+ f19t12_L             f19t12Leak           N12                              500     393.7007874             100               0                 Open   ;
+ f19t20               N19                  f19t20Leak                       500     393.7007874             100               0                 Open   ;
+ f19t20_L             f19t20Leak           N20                              500     393.7007874             100               0                 Open   ;
+ f20t13               N20                  f20t13Leak                       500     393.7007874             100               0                 Open   ;
+ f20t13_L             f20t13Leak           N13                              500     393.7007874             100               0                 Open   ;
+ f20t19               N20                  f20t19Leak                       500     393.7007874             100               0                 Open   ;
+ f20t19_L             f20t19Leak           N19                              500     393.7007874             100               0                 Open   ;
 
 [PUMPS]
 ;ID                   Node1                Node2                Properties          
- pumpf2pumpt2         PWF2                 PWFN2                POWER    0.06705110444219038    ;
- pumpf4pumpt4         PWF4                 PWFN4                POWER    0.06705110444219038    ;
- pumpf16pumpt16       PWF16                PWFN16               POWER    0.06705110444219038    ;
- pumpf20pumpt20       PWF20                PWFN20               POWER    0.06705110444219038    ;
+ pumpf2pumpt2         RES2                 PWFn2                POWER    0.06705110444219038    ;
+ pumpf4pumpt4         RES4                 PWFn4                POWER    0.06705110444219038    ;
+ pumpf16pumpt16       RES16                PWFn16               POWER    0.06705110444219038    ;
+ pumpf20pumpt20       RES20                PWFn20               POWER    0.06705110444219038    ;
 
 [VALVES]
 ;ID                   Node1                Node2                            Diameter Type              Setting           Minor Loss
@@ -204,7 +320,7 @@ GLOBAL PRICE           0.0000
 ;Tank ID             Model Fraction
 
 [TIMES]
-DURATION             00:00:00
+DURATION             24:00:00
 HYDRAULIC TIMESTEP   01:00:00
 QUALITY TIMESTEP     00:06:00
 PATTERN TIMESTEP     01:00:00
@@ -243,12 +359,12 @@ TOLERANCE            0.01
 N0                  0.000000000          0.000000000
 N1                  5.000000000          0.000000000
 N2                 10.000000000          0.000000000
-PWF2               12.000000000          2.000000000
-PWFN2              11.000000000          1.000000000
+RES2               12.000000000          2.000000000
+PWFn2              11.000000000          1.000000000
 N3                 15.000000000          0.000000000
 N4                 20.000000000          0.000000000
-PWF4               22.000000000          2.000000000
-PWFN4              21.000000000          1.000000000
+RES4               22.000000000          2.000000000
+PWFn4              21.000000000          1.000000000
 N5                 25.000000000          0.000000000
 N6                 30.000000000          0.000000000
 N7                  0.000000000          5.000000000
@@ -260,14 +376,68 @@ N13                30.000000000          5.000000000
 N14                 0.000000000         10.000000000
 N15                 5.000000000         10.000000000
 N16                10.000000000         10.000000000
-PWF16              12.000000000         12.000000000
-PWFN16             11.000000000         11.000000000
+RES16              12.000000000         12.000000000
+PWFn16             11.000000000         11.000000000
 N17                15.000000000         10.000000000
 N18                20.000000000         10.000000000
 N19                25.000000000         10.000000000
 N20                30.000000000         10.000000000
-PWF20              32.000000000         12.000000000
-PWFN20             31.000000000         11.000000000
+RES20              32.000000000         12.000000000
+PWFn20             31.000000000         11.000000000
+f0t1Leak            2.500000000          0.000000000
+f0t7Leak            0.000000000          2.500000000
+f1t0Leak            2.500000000          0.000000000
+f1t8Leak            5.000000000          2.500000000
+f1t2Leak            7.500000000          0.000000000
+f2t1Leak            7.500000000          0.000000000
+f2t9Leak           10.000000000          2.500000000
+f2t3Leak           12.500000000          0.000000000
+f3t2Leak           12.500000000          0.000000000
+f3t4Leak           17.500000000          0.000000000
+f4t3Leak           17.500000000          0.000000000
+f4t11Leak          20.000000000          2.500000000
+f4t5Leak           22.500000000          0.000000000
+f5t4Leak           22.500000000          0.000000000
+f5t6Leak           27.500000000          0.000000000
+f5t12Leak          25.000000000          2.500000000
+f6t5Leak           27.500000000          0.000000000
+f6t13Leak          30.000000000          2.500000000
+f7t0Leak            0.000000000          2.500000000
+f7t8Leak            2.500000000          5.000000000
+f7t14Leak           0.000000000          7.500000000
+f8t7Leak            2.500000000          5.000000000
+f8t1Leak            5.000000000          2.500000000
+f8t9Leak            7.500000000          5.000000000
+f9t2Leak           10.000000000          2.500000000
+f9t8Leak            7.500000000          5.000000000
+f9t16Leak          10.000000000          7.500000000
+f11t4Leak          20.000000000          2.500000000
+f11t18Leak         20.000000000          7.500000000
+f11t12Leak         22.500000000          5.000000000
+f12t5Leak          25.000000000          2.500000000
+f12t11Leak         22.500000000          5.000000000
+f12t13Leak         27.500000000          5.000000000
+f12t19Leak         25.000000000          7.500000000
+f13t6Leak          30.000000000          2.500000000
+f13t12Leak         27.500000000          5.000000000
+f13t20Leak         30.000000000          7.500000000
+f14t7Leak           0.000000000          7.500000000
+f14t15Leak          2.500000000         10.000000000
+f15t14Leak          2.500000000         10.000000000
+f15t16Leak          7.500000000         10.000000000
+f16t9Leak          10.000000000          7.500000000
+f16t15Leak          7.500000000         10.000000000
+f16t17Leak         12.500000000         10.000000000
+f17t16Leak         12.500000000         10.000000000
+f17t18Leak         17.500000000         10.000000000
+f18t17Leak         17.500000000         10.000000000
+f18t11Leak         20.000000000          7.500000000
+f18t19Leak         22.500000000         10.000000000
+f19t18Leak         22.500000000         10.000000000
+f19t12Leak         25.000000000          7.500000000
+f19t20Leak         27.500000000         10.000000000
+f20t13Leak         30.000000000          7.500000000
+f20t19Leak         27.500000000         10.000000000
 
 [VERTICES]
 ;Link      X-Coord    Y-Coord   
