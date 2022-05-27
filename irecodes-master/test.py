@@ -1,3 +1,4 @@
+from imp import init_builtin
 import wntr
 import numpy as np
 import numpy as np
@@ -55,6 +56,8 @@ shape[17]['LinkTo'] = {key: [17, 19] for key in ['CWP', 'PWP', 'EPTL']}
 shape[18]['LinkTo'] = {key: [18, 12, 20] for key in ['CWP', 'PWP', 'EPTL']}
 shape[19]['LinkTo'] = {key: [19, 13, 21] for key in ['CWP', 'PWP', 'EPTL']}
 shape[20]['LinkTo'] = {key: [14, 20] for key in ['CWP', 'PWP', 'EPTL']}
+
+## Definition of coordinates
 
 shape[0]['Coord. X'] = 0
 shape[0]['Coord. Y'] = 0
@@ -161,6 +164,7 @@ damage_vector = [0.27, 0.35, 0.27, 0.35, 0.19, 0.47, 0.25, 0.15, 0.25, 0.15, 0.3
 # 0 = no damage / no functionality
 # 1 = complete damage / full functionality
 
+## Definition of demand of BSUs
 def get_demand_value (node, type, conversion = True):
     default_demand_value = 0.086
     if (len(shape[node]['Content']) == 0):
@@ -168,7 +172,7 @@ def get_demand_value (node, type, conversion = True):
     if conversion:
         return default_demand_value * shape[node]['Content'].get(type) * 0.011574074074074 # conversion from ML/d to m^3/s
     return default_demand_value * shape[node]['Content'].get(type)
-
+## Definition of supply of PWFs
 def get_supply_value (node, type, conversion = True):
     default_supply_value = -0.2
     if (len(shape[node]['Content']) == 0):
@@ -177,15 +181,14 @@ def get_supply_value (node, type, conversion = True):
         return default_supply_value * shape[node]['Content'].get(type) * 0.011574074074074 # conversion from ML/d to m^3/s
     return default_supply_value * shape[node]['Content'].get(type)
 
-
-def network(): ## and no pumps
-    ## Define network
+## Definition of Network when undamaged
+def network(): 
 
     wn = wntr.network.WaterNetworkModel()
-    add_pipes_to = []
+    add_pipes_to = []  
     supply_pwf = 0
     for i in range(0,21):
-        if (i == 10):
+        if (i == 10): # since there is no node 10 it has to be skipped
             continue
         if (len(shape[i]['Content']) != 0):
             if ('BSU' in shape[i]['Content']):
@@ -242,6 +245,7 @@ def network(): ## and no pumps
     ## Check that suppliers can meet demand of BSU
     
     demand = results.node['demand']
+    # use results.node for node results (demand, pressure, leak_demand) and results.link for link results (flowrate)
     leak_demand = results.node['leak_demand']
     pwfs = [2,4,16,20]
     total_pwf_supply = 0
@@ -259,12 +263,9 @@ def network(): ## and no pumps
 
 #network()
 
-## Damaged Networks:
+## Damaged Networks: defined one per damage state (times and functionalites chosen randomly)
+
     # PWFs fully damage : t0
-    # PWF2 repaired: t5
-    # PWF4 repaired: t8
-    # PWF16 repaired: t12
-    # PWF20 repaired: t15
 
 damage_vector_t0 = [1,1,1,1] # full functionality = 0
 def damaged_network_t0():
@@ -279,7 +280,8 @@ def damaged_network_t0():
         if (len(shape[i]['Content']) != 0):
             if ('BSU' in shape[i]['Content']):
                 calculated_base_demand = get_demand_value(i, 'BSU', True)
-                calculated_base_demand *= (1-damage_vector[dwert]) #The influence of damage on the supply capacity is considered by multiplying the current functionality level of the component with its supply capacity at full functionality. 
+                calculated_base_demand *= (1-damage_vector[dwert]) 
+#The influence of damage on the supply capacity is considered by multiplying the current functionality level of the component with its supply capacity at full functionality. 
                 dwert+=1
                 wn.add_junction('N'+str(i), base_demand = calculated_base_demand, coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
             else:
@@ -300,8 +302,8 @@ def damaged_network_t0():
         if (i == 10):
             continue
         for res in add_pipes_to:
-            #wn.add_pipe('RES'+str(res)+'PWFn'+str(res),'RES'+str(res),'PWFn'+str(res)) #it is only by removing the pipes and pumps linking the RES to the PWFS that full damage to the system can be simulated. changing the initial_status of the pipes or pumps to 'CLOSED' does not work
-            #wn.add_pump('pumpf'+str(res)+'pumpt'+str(res),'RES'+str(res),'PWFn'+str(res)) 
+            wn.add_pipe('RES'+str(res)+'PWFn'+str(res),'RES'+str(res),'PWFn'+str(res)) #it is only by removing the pipes and pumps linking the RES to the PWFS that full damage to the system can be simulated. changing the initial_status of the pipes or pumps to 'CLOSED' does not work
+            wn.add_pump('pumpf'+str(res)+'pumpt'+str(res),'RES'+str(res),'PWFn'+str(res), initial_status='CLOSED') 
             wn.add_pipe('PWFn'+str(res)+'tr'+str(res),'PWFn'+str(res),'N'+str(res))
             wn.add_pipe('fn'+str(res)+'PWFn'+str(res),'N'+str(res),'PWFn'+str(res))
 
@@ -313,7 +315,7 @@ def damaged_network_t0():
             wn.add_valve('v' + str(i) + str(linkto-1),'N'+str(i),'N'+str(linkto-1), valve_type='FCV')
             wn.add_valve('v' + str(linkto-1) + str(i),'N'+str(linkto-1),'N'+str(i), valve_type='FCV')
     
-    for i in range(0,21):
+    for i in range(0,21): # only add leak to pipe in one direction, otherwise isolated pipe
         if (i == 10):
             continue
         values = shape[i]['LinkTo'].get('PWP') # focus on PWP
@@ -348,18 +350,23 @@ def damaged_network_t0():
 
     demand = results.node['demand']
     leak_demand = results.node['leak_demand']
+    
+    ## Check that suppliers can meet demand of BSU
+
     pwfs = [2,4,16,20]
     total_pwf_supply = 0
     for i in pwfs:
         total_pwf_supply = total_pwf_supply + demand.loc[:,'PWFn'+str(i)][0]+demand.loc[:,'RES'+str(i)][0]
-    if (total_pwf_supply*-1 < supply_pwf*-1):
+    if (total_pwf_supply*-1 < supply_pwf*-1): # multiplied with -1 since supply is negative
         print("PWFs can supply demand")
     else:
         print("PWFs can not supply demand")
     print(demand.head())
     demand.to_excel('demand_damaged_t0.xlsx')
     leak_demand.to_excel('leak_demand_t0.xlsx')
-#damaged_network_t0()
+damaged_network_t0()
+
+    # PWF2 repaired: t5
 
 damage_vector_t5 = [0,1,1,1]
 def damaged_network_t5():
@@ -380,7 +387,8 @@ def damaged_network_t5():
             else:
                 wn.add_junction('N'+str(i), coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
             if ('PWF' in shape[i]['Content']):
-                if (i == 4):
+                if (i == 4): 
+# ignore PWF4, 16, 20, otherwise the reservoirs will have a supply even if the PWFns are damaged
                     continue
                 if (i == 16):
                     continue
@@ -439,7 +447,7 @@ def damaged_network_t5():
                 #print("omitted split at "+str(linkto)+" "+str(i+1))
                 wn = wntr.morph.split_pipe(wn,'f'+str(i)+'t'+str(linkto-1), 'f'+str(i)+'t'+str(linkto-1)+'_L', 'f'+str(i)+'t'+str(linkto-1)+'Leak')
                 pipe = wn.get_node('f'+str(i)+'t'+str(linkto-1)+'Leak')
-                pipe.add_leak(wn, discharge_coeff=0.6, area=0.05, start_time=0,end_time=3600) # area: from example of WNTR documentation, discharge_coeff: default = 0.75
+                pipe.add_leak(wn, discharge_coeff=0.2, area=0.01, start_time=0,end_time=3600) # area: from example of WNTR documentation, discharge_coeff: default = 0.75
     
     wntr.graphics.plot_network(wn, node_alpha=0, node_labels=True, title='Case Study Network', link_alpha=0)
    
@@ -461,11 +469,14 @@ def damaged_network_t5():
 
     demand = results.node['demand']
     leak_demand = results.node['leak_demand']
+    
+    ## Check that suppliers can meet demand of BSU
+    
     pwfs = [2]
     total_pwf_supply = 0
     for i in pwfs:
         total_pwf_supply += demand.loc[:,'PWFn'+str(i)][0]
-    if (total_pwf_supply*-1 < supply_pwf*-1):
+    if (total_pwf_supply*-1 < supply_pwf*-1): 
         print("PWFs can supply demand")
     else:
         print("PWFs can not supply demand")
@@ -474,6 +485,8 @@ def damaged_network_t5():
     demand.to_excel('demand_damaged_t5.xlsx')
     leak_demand.to_excel('leak_demand_t5.xlsx')    
 #damaged_network_t5()
+
+    # PWF4 repaired: t8
 
 damage_vector_t8 = [0,0,1,1]
 def damaged_network_t8():
@@ -547,7 +560,7 @@ def damaged_network_t8():
                 #print("omitted split at "+str(linkto)+" "+str(i+1))
                 wn = wntr.morph.split_pipe(wn,'f'+str(i)+'t'+str(linkto-1), 'f'+str(i)+'t'+str(linkto-1)+'_L', 'f'+str(i)+'t'+str(linkto-1)+'Leak')
                 pipe = wn.get_node('f'+str(i)+'t'+str(linkto-1)+'Leak')
-                pipe.add_leak(wn, discharge_coeff=0.45, area=0.05, start_time=0,end_time=3600) # area: from example of WNTR documentation, discharge_coeff: default = 0.75
+                pipe.add_leak(wn, discharge_coeff=0.15, area=0.01, start_time=0,end_time=3600) # area: from example of WNTR documentation, discharge_coeff: default = 0.75
 
     wntr.graphics.plot_network(wn, node_alpha=0, node_labels=True, title='Case Study Network', link_alpha=0)
    
@@ -570,6 +583,9 @@ def damaged_network_t8():
     demand = results.node['demand']
     leak_demand = results.node['leak_demand']
     pwfs = [2,4]
+     
+    ## Check that suppliers can meet demand of BSU
+    
     total_pwf_supply = 0
     for i in pwfs:
         total_pwf_supply += demand.loc[:,'PWFn'+str(i)][0]
@@ -581,6 +597,8 @@ def damaged_network_t8():
     demand.to_excel('demand_damaged_t8.xlsx')
     leak_demand.to_excel('leak_demand_t8.xlsx')
 #damaged_network_t8()
+
+    ## PWF16 repaired: t12
 
 damage_vector_t12 = [0,0,0,1]
 def damaged_network_t12():
@@ -648,7 +666,7 @@ def damaged_network_t12():
                 #print("omitted split at "+str(linkto)+" "+str(i+1))
                 wn = wntr.morph.split_pipe(wn,'f'+str(i)+'t'+str(linkto-1), 'f'+str(i)+'t'+str(linkto-1)+'_L', 'f'+str(i)+'t'+str(linkto-1)+'Leak')
                 pipe = wn.get_node('f'+str(i)+'t'+str(linkto-1)+'Leak')
-                pipe.add_leak(wn, discharge_coeff=0.30, area=0.05, start_time=0,end_time=3600) # area: from example of WNTR documentation, discharge_coeff: default = 0.75
+                pipe.add_leak(wn, discharge_coeff=0.1, area=0.01, start_time=0,end_time=3600) # area: from example of WNTR documentation, discharge_coeff: default = 0.75
 
 
     wntr.graphics.plot_network(wn, node_alpha=0, node_labels=True, title='Case Study Network', link_alpha=0)
@@ -669,8 +687,12 @@ def damaged_network_t12():
         else:
             print('Pressure exceeds required_pressure'+str(i))
 
-    demand = results.node['demand']  #get.node for demand, pressure, leak demand, head or get.link for the velocity, flowrate, headloss
+    demand = results.node['demand']  
+#get.node for demand, pressure, leak demand, head or get.link for the velocity, flowrate, headloss
     leak_demand = results.node['leak_demand']
+
+    ## Check that suppliers can meet demand of BSU
+
     pwfs = [2,4,16]
     total_pwf_supply = 0
     for i in pwfs:
@@ -683,6 +705,8 @@ def damaged_network_t12():
     demand.to_excel('demand_damaged_t12.xlsx')
     leak_demand.to_excel('leak_demand_t12.xlsx')
 #damaged_network_t12()
+
+    ## PWF20 repaired: t15
 
 damage_vector_t15 = [0,0,0,0]
 def damaged_network_t15():
@@ -698,7 +722,7 @@ def damaged_network_t15():
         if (len(shape[i]['Content']) != 0):
             if ('BSU' in shape[i]['Content']):
                 calculated_base_demand = get_demand_value(i, 'BSU', True)
-                calculated_base_demand *= (1-damage_vector[dwert]+0.3) # reduce damage level by inceasing functionality
+                calculated_base_demand *= (1-damage_vector[dwert]+0.25) # reduce damage level by inceasing functionality
                 dwert+=1
                 wn.add_junction('N'+str(i), base_demand = calculated_base_demand, coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
             else:
@@ -745,7 +769,7 @@ def damaged_network_t15():
                 #print("omitted split at "+str(linkto)+" "+str(i+1))
                 wn = wntr.morph.split_pipe(wn,'f'+str(i)+'t'+str(linkto-1), 'f'+str(i)+'t'+str(linkto-1)+'_L', 'f'+str(i)+'t'+str(linkto-1)+'Leak')
                 pipe = wn.get_node('f'+str(i)+'t'+str(linkto-1)+'Leak')
-                pipe.add_leak(wn, discharge_coeff=0.15, area=0.05, start_time=0,end_time=3600) # area: from example of WNTR documentation, discharge_coeff: default = 0.75
+                pipe.add_leak(wn, discharge_coeff=0.05, area=0.01, start_time=0,end_time=3600) # area: from example of WNTR documentation, discharge_coeff: default = 0.75
 
 
     wntr.graphics.plot_network(wn, node_alpha=0, node_labels=True, title='Case Study Network', link_alpha=0)
@@ -767,6 +791,9 @@ def damaged_network_t15():
             print('Pressure exceeds required_pressure'+str(i))
 
     demand = results.node['demand']
+
+    ## Check that suppliers can meet demand of BSU
+
     pwfs = [2,4,16,20]
     total_pwf_supply = 0
     for i in pwfs:
