@@ -158,8 +158,8 @@ damage_vector = [0.27, 0.35, 0.27, 0.35, 0.19, 0.47, 0.25, 0.15, 0.25, 0.15, 0.3
                  0.13, 0.6, 0.51, 0.08, 0.85, 0.43, 0.49, 0.07, 0.27, 0.27, 0.1, 0.39, 0.39, 0.1, 0.6, 1.0, 
                  1.0, 0.15, 0.15, 0.24, 0.11, 0.11, 0.18, 0.47, 0.35, 0.2]
 
-# 0 = no damage
-# 1 = complete damage
+# 0 = no damage / no functionality
+# 1 = complete damage / full functionality
 
 def get_demand_value (node, type, conversion = True):
     default_demand_value = 0.086
@@ -243,7 +243,6 @@ def network(): ## and no pumps
     
     demand = results.node['demand']
     leak_demand = results.node['leak_demand']
-    flowrate = results.link['flowrate'] #get.node for demand, pressure, leak demand, head or get.link for the velocity, flowrate, headloss
     pwfs = [2,4,16,20]
     total_pwf_supply = 0
     total_BSU_demand = 0
@@ -255,13 +254,11 @@ def network(): ## and no pumps
     else:
         print("PWFs can not supply demand")
     print(demand.head())
+    demand.to_excel('demand.xlsx')
     leak_demand.to_excel('leak_demand.xlsx')
-    #print(total_pwf_supply*-1)
-    #print(supply_pwf*-1)
-    #print(total_BSU_demand)
-
 
 #network()
+
 ## Damaged Networks:
     # PWFs fully damage : t0
     # PWF2 repaired: t5
@@ -269,7 +266,7 @@ def network(): ## and no pumps
     # PWF16 repaired: t12
     # PWF20 repaired: t15
 
-damage_vector_t0 = [1,1,1,1] # functionality 0
+damage_vector_t0 = [1,1,1,1] # full functionality = 0
 def damaged_network_t0():
     dwert = 0
     dwert_t0 =0
@@ -298,17 +295,10 @@ def damaged_network_t0():
         else:
             wn.add_junction('N'+str(i), coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
     
+        directions = [] # add leak only to pipes in one direction otherwise nodes will be disconnected -> error
     for i in range(0,21):
         if (i == 10):
             continue
-        values = shape[i]['LinkTo'].get('PWP') # focus on PWP
-        for linkto in values:
-            wn.add_pipe('f'+str(i)+'t'+str(linkto-1),'N'+str(i),'N'+str(linkto-1),diameter =10)
-            wn = wntr.morph.split_pipe(wn,'f'+str(i)+'t'+str(linkto-1), 'f'+str(i)+'t'+str(linkto-1)+'_L', 'f'+str(i)+'t'+str(linkto-1)+'Leak' )
-            pipe = wn.get_node('f'+str(i)+'t'+str(linkto-1)+'Leak')
-            calculated_discharge_coeff = damage_vector[dwert] ## reducing the demand leak means reducing the damage level
-            dwert+=1
-            pipe.add_leak(wn, discharge_coeff=calculated_discharge_coeff, area=0.05) # area: from example of WNTR documentation, discharge_coeff: default = 0.75
         for res in add_pipes_to:
             #wn.add_pipe('RES'+str(res)+'PWFn'+str(res),'RES'+str(res),'PWFn'+str(res)) #it is only by removing the pipes and pumps linking the RES to the PWFS that full damage to the system can be simulated. changing the initial_status of the pipes or pumps to 'CLOSED' does not work
             #wn.add_pump('pumpf'+str(res)+'pumpt'+str(res),'RES'+str(res),'PWFn'+str(res)) 
@@ -323,271 +313,21 @@ def damaged_network_t0():
             wn.add_valve('v' + str(i) + str(linkto-1),'N'+str(i),'N'+str(linkto-1), valve_type='FCV')
             wn.add_valve('v' + str(linkto-1) + str(i),'N'+str(linkto-1),'N'+str(i), valve_type='FCV')
     
-    wntr.graphics.plot_network(wn, node_alpha=0, node_labels=True, title='Case Study Network', link_alpha=0)
-   
-    #Simulate hydraulics
-    wn.options.hydraulic.demand_model = 'PDD' # PDD or DD
-    sim = wntr.sim.WNTRSimulator(wn)    # WNTRSimulator or EpanetSimulator
-    results = sim.run_sim()
-    pressure = results.node['pressure']
-    required_pressure = wn.options.hydraulic.required_pressure
-
-    ## Check flow of water: if pressure < required_pressure -> junction will not receive full water demand
-    for i in range(0,21):
-        if (i == 10):
-            continue
-        if (pressure.loc[:,'N'+str(i)][0] < required_pressure):
-            print('Pressure does not exceed required_pressure'+str(i))
-        else:
-            print('Pressure exceeds required_pressure'+str(i))
-
-    demand = results.node['demand']
-    pwfs = [2,4,16,20]
-    total_pwf_supply = 0
-    for i in pwfs:
-        total_pwf_supply = total_pwf_supply + demand.loc[:,'PWFn'+str(i)][0]+demand.loc[:,'RES'+str(i)][0]
-    if (total_pwf_supply*-1 < supply_pwf*-1):
-        print("PWFs can supply demand")
-    else:
-        print("PWFs can not supply demand")
-    demand = results.node['demand'] #get.node for demand, pressure, leak demand, head or get.link for the velocity, flowrate, headloss
-    print(demand.head())
-    demand.to_excel('demand_damaged.xlsx')
-    # demand = demand from Junction 0-20
-    # supply = negative demand from PWFs 2,4,16,20
-    print(total_pwf_supply*-1)
-    print(supply_pwf*-1) # =0 here, because all PWF are damaged 
-
-#damaged_network_t0()
-
-damage_vector_t5 = [0,1,1,1]
-def damaged_network_t5():
-    dwert = 0
-    dwert_t5 = 0
-    supply_pwf = 0
-    wn = wntr.network.WaterNetworkModel()
-    add_pipes_to = []
-    for i in range(0,21):
-        if (i == 10):
-            continue
-        if (len(shape[i]['Content']) != 0):
-            if ('BSU' in shape[i]['Content']):
-                calculated_base_demand = get_demand_value(i, 'BSU', True)
-                calculated_base_demand *= (1-damage_vector[dwert])
-                dwert+=1
-                wn.add_junction('N'+str(i), base_demand = calculated_base_demand, coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
-            else:
-                wn.add_junction('N'+str(i), coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
-            if ('PWF' in shape[i]['Content']):
-                calculated_supply = get_supply_value(i, 'PWF', True)
-                calculated_supply *=(1-damage_vector_t5[dwert_t5])
-                supply_pwf += calculated_supply
-                dwert_t5+=1
-                wn.add_reservoir('RES'+str(i), coordinates=(shape[i]['Coord. X']+2,shape[i]['Coord. Y']+2))
-                wn.add_junction('PWFn'+str(i), base_demand = calculated_supply, coordinates=(shape[i]['Coord. X']+1,shape[i]['Coord. Y']+1))
-                add_pipes_to.append(str(i))
-        else:
-            wn.add_junction('N'+str(i), coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
-    
     for i in range(0,21):
         if (i == 10):
             continue
         values = shape[i]['LinkTo'].get('PWP') # focus on PWP
+        
         for linkto in values:
+            directions += [(i+1,linkto)]
+
             wn.add_pipe('f'+str(i)+'t'+str(linkto-1),'N'+str(i),'N'+str(linkto-1),diameter =10)
-            wn = wntr.morph.split_pipe(wn,'f'+str(i)+'t'+str(linkto-1), 'f'+str(i)+'t'+str(linkto-1)+'_L', 'f'+str(i)+'t'+str(linkto-1)+'Leak' )
-            pipe = wn.get_node('f'+str(i)+'t'+str(linkto-1)+'Leak')
-            calculated_discharge_coeff = damage_vector[dwert] ## reducing the demand leak means reducing the damage level
-            dwert+=1
-            pipe.add_leak(wn, discharge_coeff=calculated_discharge_coeff, area=0.05) # area: from example of WNTR documentation, discharge_coeff: default = 0.75
-        for res in add_pipes_to:
-            wn.add_pipe('RES'+str(res)+'PWFn'+str(res),'RES'+str(res),'PWFn'+str(res)) #it is only by removing the pipes and pumps linking the RES to the PWFS that full damage to the system can be simulated. changing the initial_status of the pipes or pumps to 'CLOSED' does not work
-            wn.add_pump('pumpf'+str(res)+'pumpt'+str(res),'RES'+str(res),'PWFn'+str(res)) 
-            wn.add_pipe('PWFn'+str(res)+'tr'+str(res),'PWFn'+str(res),'N'+str(res))
-            wn.add_pipe('fn'+str(res)+'PWFn'+str(res),'N'+str(res),'PWFn'+str(res))
+            if (not (linkto,i+1) in directions):
+                #print("omitted split at "+str(linkto)+" "+str(i+1))
+                wn = wntr.morph.split_pipe(wn,'f'+str(i)+'t'+str(linkto-1), 'f'+str(i)+'t'+str(linkto-1)+'_L', 'f'+str(i)+'t'+str(linkto-1)+'Leak')
+                pipe = wn.get_node('f'+str(i)+'t'+str(linkto-1)+'Leak')
+                pipe.add_leak(wn, discharge_coeff=0.7, area=0.05, start_time=0,end_time=3600) # area: from example of WNTR documentation, discharge_coeff: default = 0.75
 
-    for i in range(0,21):
-        if (i == 10):
-            continue
-        values = shape[i]['LinkTo'].get('PWP') # focus on PWP
-        for linkto in values:
-            wn.add_valve('v' + str(i) + str(linkto-1),'N'+str(i),'N'+str(linkto-1), valve_type='FCV')
-            wn.add_valve('v' + str(linkto-1) + str(i),'N'+str(linkto-1),'N'+str(i), valve_type='FCV')
-    
-    wntr.graphics.plot_network(wn, node_alpha=0, node_labels=True, title='Case Study Network', link_alpha=0)
-   
-    #Simulate hydraulics
-    wn.options.hydraulic.demand_model = 'PDD' # PDD or DD
-    sim = wntr.sim.WNTRSimulator(wn)    # WNTRSimulator or EpanetSimulator
-    results = sim.run_sim()
-    pressure = results.node['pressure']
-    required_pressure = wn.options.hydraulic.required_pressure
-
-    ## Check flow of water: if pressure < required_pressure -> junction will not receive full water demand
-    for i in range(0,21):
-        if (i == 10):
-            continue
-        if (pressure.loc[:,'N'+str(i)][0] < required_pressure):
-            print('Pressure does not exceed required_pressure'+str(i))
-        else:
-            print('Pressure exceeds required_pressure'+str(i))
-
-    demand = results.node['demand']
-    pwfs = [2,4,16,20]
-    total_pwf_supply = 0
-    for i in pwfs:
-        total_pwf_supply += demand.loc[:,'PWFn'+str(i)][0]
-    if (total_pwf_supply < supply_pwf):
-        print("PWFs can supply demand")
-    else:
-        print("PWFs can not supply demand")
-    demand = results.node['demand'] #get.node for demand, pressure, leak demand, head or get.link for the velocity, flowrate, headloss
-    print(demand.head())
-    demand.to_excel('demand_damaged.xlsx')
-    
-#damaged_network_t5()
-
-damage_vector_t8 = [0,0,1,1]
-def damaged_network_t8():
-    dwert = 0
-    dwert_t8 = 0
-    supply_pwf = 0
-    wn = wntr.network.WaterNetworkModel()
-    add_pipes_to = []
-    for i in range(0,21):
-        if (i == 10):
-            continue
-        if (len(shape[i]['Content']) != 0):
-            if ('BSU' in shape[i]['Content']):
-                calculated_base_demand = get_demand_value(i, 'BSU', True)
-                calculated_base_demand *= (1-damage_vector[dwert]+0.13) # reduce damage level by inceasing functionality
-                dwert+=1
-                wn.add_junction('N'+str(i), base_demand = calculated_base_demand, coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
-            else:
-                wn.add_junction('N'+str(i), coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
-            if ('PWF' in shape[i]['Content']):
-                calculated_supply = get_supply_value(i, 'PWF', True)
-                calculated_supply *=(1-damage_vector_t8[dwert_t8])
-                supply_pwf += calculated_supply
-                dwert_t8+=1
-                wn.add_reservoir('RES'+str(i), coordinates=(shape[i]['Coord. X']+2,shape[i]['Coord. Y']+2))
-                wn.add_junction('PWFn'+str(i), base_demand = calculated_supply, coordinates=(shape[i]['Coord. X']+1,shape[i]['Coord. Y']+1))
-                add_pipes_to.append(str(i))
-        else:
-            wn.add_junction('N'+str(i), coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
-    
-    for i in range(0,21):
-        if (i == 10):
-            continue
-        values = shape[i]['LinkTo'].get('PWP') # focus on PWP
-        for linkto in values:
-            wn.add_pipe('f'+str(i)+'t'+str(linkto-1),'N'+str(i),'N'+str(linkto-1),diameter =10)
-            wn = wntr.morph.split_pipe(wn,'f'+str(i)+'t'+str(linkto-1), 'f'+str(i)+'t'+str(linkto-1)+'_L', 'f'+str(i)+'t'+str(linkto-1)+'Leak' )
-            pipe = wn.get_node('f'+str(i)+'t'+str(linkto-1)+'Leak')
-            calculated_discharge_coeff = damage_vector[dwert] - 0.13
-            dwert+=1
-            pipe.add_leak(wn, discharge_coeff=calculated_discharge_coeff, area=0.05) # area: from example of WNTR documentation, discharge_coeff: default = 0.75
-        for res in add_pipes_to:
-            wn.add_pipe('RES'+str(res)+'PWFn'+str(res),'RES'+str(res),'PWFn'+str(res)) #it is only by removing the pipes and pumps linking the RES to the PWFS that full damage to the system can be simulated. changing the initial_status of the pipes or pumps to 'CLOSED' does not work
-            wn.add_pump('pumpf'+str(res)+'pumpt'+str(res),'RES'+str(res),'PWFn'+str(res)) 
-            wn.add_pipe('PWFn'+str(res)+'tr'+str(res),'PWFn'+str(res),'N'+str(res))
-            wn.add_pipe('fn'+str(res)+'PWFn'+str(res),'N'+str(res),'PWFn'+str(res))
-
-    for i in range(0,21):
-        if (i == 10):
-            continue
-        values = shape[i]['LinkTo'].get('PWP') # focus on PWP
-        for linkto in values:
-            wn.add_valve('v' + str(i) + str(linkto-1),'N'+str(i),'N'+str(linkto-1), valve_type='FCV')
-            wn.add_valve('v' + str(linkto-1) + str(i),'N'+str(linkto-1),'N'+str(i), valve_type='FCV')
-    
-    wntr.graphics.plot_network(wn, node_alpha=0, node_labels=True, title='Case Study Network', link_alpha=0)
-   
-    #Simulate hydraulics
-    wn.options.hydraulic.demand_model = 'PDD' # PDD or DD
-    sim = wntr.sim.WNTRSimulator(wn)    # WNTRSimulator or EpanetSimulator
-    results = sim.run_sim()
-    pressure = results.node['pressure']
-    required_pressure = wn.options.hydraulic.required_pressure
-
-    ## Check flow of water: if pressure < required_pressure -> junction will not receive full water demand
-    for i in range(0,21):
-        if (i == 10):
-            continue
-        if (pressure.loc[:,'N'+str(i)][0] < required_pressure):
-            print('Pressure does not exceed required_pressure'+str(i))
-        else:
-            print('Pressure exceeds required_pressure'+str(i))
-
-    demand = results.node['demand']
-    pwfs = [2,4,16,20]
-    total_pwf_supply = 0
-    for i in pwfs:
-        total_pwf_supply += demand.loc[:,'PWFn'+str(i)][0]
-    if (total_pwf_supply < supply_pwf):
-        print("PWFs can supply demand")
-    else:
-        print("PWFs can not supply demand")
-    demand = results.node['demand'] #get.node for demand, pressure, leak demand, head or get.link for the velocity, flowrate, headloss
-    print(demand.head())
-    demand.to_excel('demand_damaged.xlsx')
-
-#damaged_network_t8()
-
-damage_vector_t12 = [0,0,0,1]
-def damaged_network_t12():
-    dwert = 0
-    dwert_t12 = 0
-    supply_pwf = 0
-    wn = wntr.network.WaterNetworkModel()
-    add_pipes_to = []
-    for i in range(0,21):
-        if (i == 10):
-            continue
-        if (len(shape[i]['Content']) != 0):
-            if ('BSU' in shape[i]['Content']):
-                calculated_base_demand = get_demand_value(i, 'BSU', True)
-                calculated_base_demand *= (1-damage_vector[dwert]+0.29) # reduce damage level by inceasing functionality
-                dwert+=1
-                wn.add_junction('N'+str(i), base_demand = calculated_base_demand, coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
-            else:
-                wn.add_junction('N'+str(i), coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
-            if ('PWF' in shape[i]['Content']):
-                calculated_supply = get_supply_value(i, 'PWF', True)
-                calculated_supply *=(1-damage_vector_t12[dwert_t12])
-                supply_pwf += calculated_supply
-                dwert_t12+=1
-                wn.add_reservoir('RES'+str(i), coordinates=(shape[i]['Coord. X']+2,shape[i]['Coord. Y']+2))
-                wn.add_junction('PWFn'+str(i), base_demand = calculated_supply, coordinates=(shape[i]['Coord. X']+1,shape[i]['Coord. Y']+1))
-                add_pipes_to.append(str(i))
-        else:
-            wn.add_junction('N'+str(i), coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
-    
-    for i in range(0,21):
-        if (i == 10):
-            continue
-        values = shape[i]['LinkTo'].get('PWP') # focus on PWP
-        for linkto in values:
-            wn.add_pipe('f'+str(i)+'t'+str(linkto-1),'N'+str(i),'N'+str(linkto-1),diameter =10)
-            wn = wntr.morph.split_pipe(wn,'f'+str(i)+'t'+str(linkto-1), 'f'+str(i)+'t'+str(linkto-1)+'_L', 'f'+str(i)+'t'+str(linkto-1)+'Leak' )
-            pipe = wn.get_node('f'+str(i)+'t'+str(linkto-1)+'Leak')
-            calculated_discharge_coeff = damage_vector[dwert] - 0.29
-            dwert+=1
-            pipe.add_leak(wn, discharge_coeff=calculated_discharge_coeff, area=0.05) # area: from example of WNTR documentation, discharge_coeff: default = 0.75
-        for res in add_pipes_to:
-            wn.add_pipe('RES'+str(res)+'PWFn'+str(res),'RES'+str(res),'PWFn'+str(res)) #it is only by removing the pipes and pumps linking the RES to the PWFS that full damage to the system can be simulated. changing the initial_status of the pipes or pumps to 'CLOSED' does not work
-            wn.add_pump('pumpf'+str(res)+'pumpt'+str(res),'RES'+str(res),'PWFn'+str(res)) 
-            wn.add_pipe('PWFn'+str(res)+'tr'+str(res),'PWFn'+str(res),'N'+str(res))
-            wn.add_pipe('fn'+str(res)+'PWFn'+str(res),'N'+str(res),'PWFn'+str(res))
-
-    for i in range(0,21):
-        if (i == 10):
-            continue
-        values = shape[i]['LinkTo'].get('PWP') # focus on PWP
-        for linkto in values:
-            wn.add_valve('v' + str(i) + str(linkto-1),'N'+str(i),'N'+str(linkto-1), valve_type='FCV')
-            wn.add_valve('v' + str(linkto-1) + str(i),'N'+str(linkto-1),'N'+str(i), valve_type='FCV')
-    
     wntr.graphics.plot_network(wn, node_alpha=0, node_labels=True, title='Case Study Network', link_alpha=0)
    
     #Simulate hydraulics
@@ -611,15 +351,337 @@ def damaged_network_t12():
     pwfs = [2,4,16,20]
     total_pwf_supply = 0
     for i in pwfs:
+        total_pwf_supply = total_pwf_supply + demand.loc[:,'PWFn'+str(i)][0]+demand.loc[:,'RES'+str(i)][0]
+    if (total_pwf_supply*-1 < supply_pwf*-1):
+        print("PWFs can supply demand")
+    else:
+        print("PWFs can not supply demand")
+    print(demand.head())
+    demand.to_excel('demand_damaged_t0.xlsx')
+    leak_demand.to_excel('leak_demand_t0.xlsx')
+#damaged_network_t0()
+
+damage_vector_t5 = [0,1,1,1]
+def damaged_network_t5():
+    dwert = 0
+    dwert_t5 = 0
+    supply_pwf = 0
+    wn = wntr.network.WaterNetworkModel()
+    add_pipes_to = []
+    for i in range(0,21):
+        if (i == 10):
+            continue
+        if (len(shape[i]['Content']) != 0):
+            if ('BSU' in shape[i]['Content']):
+                calculated_base_demand = get_demand_value(i, 'BSU', True)
+                calculated_base_demand *= (1-damage_vector[dwert])
+                dwert+=1
+                wn.add_junction('N'+str(i), base_demand = calculated_base_demand, coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
+            else:
+                wn.add_junction('N'+str(i), coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
+            if ('PWF' in shape[i]['Content']):
+                if (i == 4):
+                    continue
+                if (i == 16):
+                    continue
+                if (i == 20):
+                    continue
+                calculated_supply = get_supply_value(i, 'PWF', True)
+                calculated_supply *=(1-damage_vector_t5[dwert_t5])
+                supply_pwf += calculated_supply
+                dwert_t5+=1
+                wn.add_reservoir('RES'+str(i), coordinates=(shape[i]['Coord. X']+2,shape[i]['Coord. Y']+2))
+                wn.add_junction('PWFn'+str(i), base_demand = calculated_supply, coordinates=(shape[i]['Coord. X']+1,shape[i]['Coord. Y']+1))
+                add_pipes_to.append(str(i))
+        else:
+            wn.add_junction('N'+str(i), coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
+
+    directions = []
+    for i in range(0,21):
+        if (i == 4):
+            continue
+        if (i == 16):
+            continue
+        if (i == 20):
+            continue
+        if (i == 10):
+            continue
+        for res in add_pipes_to:
+            wn.add_pipe('RES'+str(res)+'PWFn'+str(res),'RES'+str(res),'PWFn'+str(res)) #it is only by removing the pipes and pumps linking the RES to the PWFS that full damage to the system can be simulated. changing the initial_status of the pipes or pumps to 'CLOSED' does not work
+            wn.add_pump('pumpf'+str(res)+'pumpt'+str(res),'RES'+str(res),'PWFn'+str(res)) 
+            wn.add_pipe('PWFn'+str(res)+'tr'+str(res),'PWFn'+str(res),'N'+str(res))
+            wn.add_pipe('fn'+str(res)+'PWFn'+str(res),'N'+str(res),'PWFn'+str(res))
+
+    for i in range(0,21):
+        if (i == 10):
+            continue
+        values = shape[i]['LinkTo'].get('PWP') # focus on PWP
+        for linkto in values:
+            wn.add_valve('v' + str(i) + str(linkto-1),'N'+str(i),'N'+str(linkto-1), valve_type='FCV')
+            wn.add_valve('v' + str(linkto-1) + str(i),'N'+str(linkto-1),'N'+str(i), valve_type='FCV')
+    
+    for i in range(0,21):
+        if (i == 4):
+            continue
+        if (i == 16):
+            continue
+        if (i == 20):
+            continue
+        if (i == 10):
+            continue
+        values = shape[i]['LinkTo'].get('PWP') # focus on PWP
+        
+        for linkto in values:
+            directions += [(i+1,linkto)]
+
+            wn.add_pipe('f'+str(i)+'t'+str(linkto-1),'N'+str(i),'N'+str(linkto-1),diameter =10)
+            if (not (linkto,i+1) in directions):
+                #print("omitted split at "+str(linkto)+" "+str(i+1))
+                wn = wntr.morph.split_pipe(wn,'f'+str(i)+'t'+str(linkto-1), 'f'+str(i)+'t'+str(linkto-1)+'_L', 'f'+str(i)+'t'+str(linkto-1)+'Leak')
+                pipe = wn.get_node('f'+str(i)+'t'+str(linkto-1)+'Leak')
+                pipe.add_leak(wn, discharge_coeff=0.6, area=0.05, start_time=0,end_time=3600) # area: from example of WNTR documentation, discharge_coeff: default = 0.75
+    
+    wntr.graphics.plot_network(wn, node_alpha=0, node_labels=True, title='Case Study Network', link_alpha=0)
+   
+    #Simulate hydraulics
+    wn.options.hydraulic.demand_model = 'PDD' # PDD or DD
+    sim = wntr.sim.WNTRSimulator(wn)    # WNTRSimulator or EpanetSimulator
+    results = sim.run_sim()
+    pressure = results.node['pressure']
+    required_pressure = wn.options.hydraulic.required_pressure
+
+    ## Check flow of water: if pressure < required_pressure -> junction will not receive full water demand
+    for i in range(0,21):
+        if (i == 10):
+            continue
+        if (pressure.loc[:,'N'+str(i)][0] < required_pressure):
+            print('Pressure does not exceed required_pressure'+str(i))
+        else:
+            print('Pressure exceeds required_pressure'+str(i))
+
+    demand = results.node['demand']
+    leak_demand = results.node['leak_demand']
+    pwfs = [2]
+    total_pwf_supply = 0
+    for i in pwfs:
         total_pwf_supply += demand.loc[:,'PWFn'+str(i)][0]
-    if (total_pwf_supply < supply_pwf):
+    if (total_pwf_supply*-1 < supply_pwf*-1):
         print("PWFs can supply demand")
     else:
         print("PWFs can not supply demand")
     demand = results.node['demand'] #get.node for demand, pressure, leak demand, head or get.link for the velocity, flowrate, headloss
     print(demand.head())
-    demand.to_excel('demand_damaged.xlsx')
+    demand.to_excel('demand_damaged_t5.xlsx')
+    leak_demand.to_excel('leak_demand_t5.xlsx')    
+#damaged_network_t5()
 
+damage_vector_t8 = [0,0,1,1]
+def damaged_network_t8():
+    dwert = 0
+    dwert_t8 = 0
+    supply_pwf = 0
+    wn = wntr.network.WaterNetworkModel()
+    add_pipes_to = []
+    for i in range(0,21):
+        if (i == 10):
+            continue
+        if (len(shape[i]['Content']) != 0):
+            if ('BSU' in shape[i]['Content']):
+                calculated_base_demand = get_demand_value(i, 'BSU', True)
+                calculated_base_demand *= (1-damage_vector[dwert]+0.1) # reduce damage level by inceasing functionality
+                dwert+=1
+                wn.add_junction('N'+str(i), base_demand = calculated_base_demand, coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
+            else:
+                wn.add_junction('N'+str(i), coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
+            if ('PWF' in shape[i]['Content']):
+                if (i == 16):
+                    continue
+                if (i == 20):
+                    continue
+                calculated_supply = get_supply_value(i, 'PWF', True)
+                calculated_supply *=(1-damage_vector_t8[dwert_t8])
+                supply_pwf += calculated_supply
+                dwert_t8+=1
+                wn.add_reservoir('RES'+str(i), coordinates=(shape[i]['Coord. X']+2,shape[i]['Coord. Y']+2))
+                wn.add_junction('PWFn'+str(i), base_demand = calculated_supply, coordinates=(shape[i]['Coord. X']+1,shape[i]['Coord. Y']+1))
+                add_pipes_to.append(str(i))
+        else:
+            wn.add_junction('N'+str(i), coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
+    
+    directions = []
+    for i in range(0,21):
+        if (i == 16):
+            continue
+        if (i == 20):
+            continue
+        if (i == 10):
+            continue
+        for res in add_pipes_to:
+            wn.add_pipe('RES'+str(res)+'PWFn'+str(res),'RES'+str(res),'PWFn'+str(res)) #it is only by removing the pipes and pumps linking the RES to the PWFS that full damage to the system can be simulated. changing the initial_status of the pipes or pumps to 'CLOSED' does not work
+            wn.add_pump('pumpf'+str(res)+'pumpt'+str(res),'RES'+str(res),'PWFn'+str(res)) 
+            wn.add_pipe('PWFn'+str(res)+'tr'+str(res),'PWFn'+str(res),'N'+str(res))
+            wn.add_pipe('fn'+str(res)+'PWFn'+str(res),'N'+str(res),'PWFn'+str(res))
+
+    for i in range(0,21):
+        if (i == 10):
+            continue
+        values = shape[i]['LinkTo'].get('PWP') # focus on PWP
+        for linkto in values:
+            wn.add_valve('v' + str(i) + str(linkto-1),'N'+str(i),'N'+str(linkto-1), valve_type='FCV')
+            wn.add_valve('v' + str(linkto-1) + str(i),'N'+str(linkto-1),'N'+str(i), valve_type='FCV')
+    
+    for i in range(0,21):
+        if (i == 16):
+            continue
+        if (i == 20):
+            continue
+        if (i == 10):
+            continue
+        values = shape[i]['LinkTo'].get('PWP') # focus on PWP
+        
+        for linkto in values:
+            directions += [(i+1,linkto)]
+
+            wn.add_pipe('f'+str(i)+'t'+str(linkto-1),'N'+str(i),'N'+str(linkto-1),diameter =10)
+            if (not (linkto,i+1) in directions):
+                #print("omitted split at "+str(linkto)+" "+str(i+1))
+                wn = wntr.morph.split_pipe(wn,'f'+str(i)+'t'+str(linkto-1), 'f'+str(i)+'t'+str(linkto-1)+'_L', 'f'+str(i)+'t'+str(linkto-1)+'Leak')
+                pipe = wn.get_node('f'+str(i)+'t'+str(linkto-1)+'Leak')
+                pipe.add_leak(wn, discharge_coeff=0.45, area=0.05, start_time=0,end_time=3600) # area: from example of WNTR documentation, discharge_coeff: default = 0.75
+
+    wntr.graphics.plot_network(wn, node_alpha=0, node_labels=True, title='Case Study Network', link_alpha=0)
+   
+    #Simulate hydraulics
+    wn.options.hydraulic.demand_model = 'PDD' # PDD or DD
+    sim = wntr.sim.WNTRSimulator(wn)    # WNTRSimulator or EpanetSimulator
+    results = sim.run_sim()
+    pressure = results.node['pressure']
+    required_pressure = wn.options.hydraulic.required_pressure
+
+    ## Check flow of water: if pressure < required_pressure -> junction will not receive full water demand
+    for i in range(0,21):
+        if (i == 10):
+            continue
+        if (pressure.loc[:,'N'+str(i)][0] < required_pressure):
+            print('Pressure does not exceed required_pressure'+str(i))
+        else:
+            print('Pressure exceeds required_pressure'+str(i))
+
+    demand = results.node['demand']
+    leak_demand = results.node['leak_demand']
+    pwfs = [2,4]
+    total_pwf_supply = 0
+    for i in pwfs:
+        total_pwf_supply += demand.loc[:,'PWFn'+str(i)][0]
+    if (total_pwf_supply < supply_pwf):
+        print("PWFs can supply demand")
+    else:
+        print("PWFs can not supply demand")
+    print(demand.head())
+    demand.to_excel('demand_damaged_t8.xlsx')
+    leak_demand.to_excel('leak_demand_t8.xlsx')
+#damaged_network_t8()
+
+damage_vector_t12 = [0,0,0,1]
+def damaged_network_t12():
+    dwert = 0
+    dwert_t12 = 0
+    supply_pwf = 0
+    wn = wntr.network.WaterNetworkModel()
+    add_pipes_to = []
+    for i in range(0,21):
+        if (i == 10):
+            continue
+        if (len(shape[i]['Content']) != 0):
+            if ('BSU' in shape[i]['Content']):
+                calculated_base_demand = get_demand_value(i, 'BSU', True)
+                calculated_base_demand *= (1-damage_vector[dwert]+0.2) # reduce damage level by inceasing functionality
+                dwert+=1
+                wn.add_junction('N'+str(i), base_demand = calculated_base_demand, coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
+            else:
+                wn.add_junction('N'+str(i), coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
+            if ('PWF' in shape[i]['Content']):
+                if (i == 20):
+                    continue
+                calculated_supply = get_supply_value(i, 'PWF', True)
+                calculated_supply *=(1-damage_vector_t12[dwert_t12])
+                supply_pwf += calculated_supply
+                dwert_t12+=1
+                wn.add_reservoir('RES'+str(i), coordinates=(shape[i]['Coord. X']+2,shape[i]['Coord. Y']+2))
+                wn.add_junction('PWFn'+str(i), base_demand = calculated_supply, coordinates=(shape[i]['Coord. X']+1,shape[i]['Coord. Y']+1))
+                add_pipes_to.append(str(i))
+        else:
+            wn.add_junction('N'+str(i), coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
+    
+    directions = []
+    for i in range(0,21):
+        if (i == 20):
+            continue
+        if (i == 10):
+            continue
+        for res in add_pipes_to:
+            wn.add_pipe('RES'+str(res)+'PWFn'+str(res),'RES'+str(res),'PWFn'+str(res)) #it is only by removing the pipes and pumps linking the RES to the PWFS that full damage to the system can be simulated. changing the initial_status of the pipes or pumps to 'CLOSED' does not work
+            wn.add_pump('pumpf'+str(res)+'pumpt'+str(res),'RES'+str(res),'PWFn'+str(res)) 
+            wn.add_pipe('PWFn'+str(res)+'tr'+str(res),'PWFn'+str(res),'N'+str(res))
+            wn.add_pipe('fn'+str(res)+'PWFn'+str(res),'N'+str(res),'PWFn'+str(res))
+
+    for i in range(0,21):
+        if (i == 10):
+            continue
+        values = shape[i]['LinkTo'].get('PWP') # focus on PWP
+        for linkto in values:
+            wn.add_valve('v' + str(i) + str(linkto-1),'N'+str(i),'N'+str(linkto-1), valve_type='FCV')
+            wn.add_valve('v' + str(linkto-1) + str(i),'N'+str(linkto-1),'N'+str(i), valve_type='FCV')
+    
+    for i in range(0,21):
+        if (i == 20):
+            continue
+        if (i == 10):
+            continue
+        values = shape[i]['LinkTo'].get('PWP') # focus on PWP
+        
+        for linkto in values:
+            directions += [(i+1,linkto)]
+
+            wn.add_pipe('f'+str(i)+'t'+str(linkto-1),'N'+str(i),'N'+str(linkto-1),diameter =10)
+            if (not (linkto,i+1) in directions):
+                #print("omitted split at "+str(linkto)+" "+str(i+1))
+                wn = wntr.morph.split_pipe(wn,'f'+str(i)+'t'+str(linkto-1), 'f'+str(i)+'t'+str(linkto-1)+'_L', 'f'+str(i)+'t'+str(linkto-1)+'Leak')
+                pipe = wn.get_node('f'+str(i)+'t'+str(linkto-1)+'Leak')
+                pipe.add_leak(wn, discharge_coeff=0.30, area=0.05, start_time=0,end_time=3600) # area: from example of WNTR documentation, discharge_coeff: default = 0.75
+
+
+    wntr.graphics.plot_network(wn, node_alpha=0, node_labels=True, title='Case Study Network', link_alpha=0)
+   
+    #Simulate hydraulics
+    wn.options.hydraulic.demand_model = 'PDD' # PDD or DD
+    sim = wntr.sim.WNTRSimulator(wn)    # WNTRSimulator or EpanetSimulator
+    results = sim.run_sim()
+    pressure = results.node['pressure']
+    required_pressure = wn.options.hydraulic.required_pressure
+
+    ## Check flow of water: if pressure < required_pressure -> junction will not receive full water demand
+    for i in range(0,21):
+        if (i == 10):
+            continue
+        if (pressure.loc[:,'N'+str(i)][0] < required_pressure):
+            print('Pressure does not exceed required_pressure'+str(i))
+        else:
+            print('Pressure exceeds required_pressure'+str(i))
+
+    demand = results.node['demand']  #get.node for demand, pressure, leak demand, head or get.link for the velocity, flowrate, headloss
+    leak_demand = results.node['leak_demand']
+    pwfs = [2,4,16]
+    total_pwf_supply = 0
+    for i in pwfs:
+        total_pwf_supply += demand.loc[:,'PWFn'+str(i)][0]
+    if (total_pwf_supply < supply_pwf):
+        print("PWFs can supply demand")
+    else:
+        print("PWFs can not supply demand")
+    print(demand.head())
+    demand.to_excel('demand_damaged_t12.xlsx')
+    leak_demand.to_excel('leak_demand_t12.xlsx')
 #damaged_network_t12()
 
 damage_vector_t15 = [0,0,0,0]
@@ -629,10 +691,6 @@ def damaged_network_t15():
     dwert_t15 = 0
     supply_pwf = 0
     wn = wntr.network.WaterNetworkModel()
-    wn.options.time.duration = 24*3600
-    wn.options.time.hydraulic_timestep = 3600
-    wn.options.time.report_timestep = 3600
-    wn.options.hydraulic.demand_model = 'PDD'
     add_pipes_to = []
     for i in range(0,21):
         if (i == 10):
@@ -640,7 +698,7 @@ def damaged_network_t15():
         if (len(shape[i]['Content']) != 0):
             if ('BSU' in shape[i]['Content']):
                 calculated_base_demand = get_demand_value(i, 'BSU', True)
-                calculated_base_demand *= (1-damage_vector[dwert]+0.46) # reduce damage level by inceasing functionality
+                calculated_base_demand *= (1-damage_vector[dwert]+0.3) # reduce damage level by inceasing functionality
                 dwert+=1
                 wn.add_junction('N'+str(i), base_demand = calculated_base_demand, coordinates=(shape[i]['Coord. X'],shape[i]['Coord. Y']))
             else:
@@ -678,7 +736,6 @@ def damaged_network_t15():
         if (i == 10):
             continue
         values = shape[i]['LinkTo'].get('PWP') # focus on PWP
-
         
         for linkto in values:
             directions += [(i+1,linkto)]
@@ -688,9 +745,7 @@ def damaged_network_t15():
                 #print("omitted split at "+str(linkto)+" "+str(i+1))
                 wn = wntr.morph.split_pipe(wn,'f'+str(i)+'t'+str(linkto-1), 'f'+str(i)+'t'+str(linkto-1)+'_L', 'f'+str(i)+'t'+str(linkto-1)+'Leak')
                 pipe = wn.get_node('f'+str(i)+'t'+str(linkto-1)+'Leak')
-                calculated_discharge_coeff = damage_vector[dwert]- 0.46 ## reducing the demand leak means reducing the damage level
-                dwert+=1
-                pipe.add_leak(wn, discharge_coeff=0.9, area=0.05, start_time=0,end_time=3600) # area: from example of WNTR documentation, discharge_coeff: default = 0.75
+                pipe.add_leak(wn, discharge_coeff=0.15, area=0.05, start_time=0,end_time=3600) # area: from example of WNTR documentation, discharge_coeff: default = 0.75
 
 
     wntr.graphics.plot_network(wn, node_alpha=0, node_labels=True, title='Case Study Network', link_alpha=0)
@@ -711,8 +766,6 @@ def damaged_network_t15():
         else:
             print('Pressure exceeds required_pressure'+str(i))
 
-
-    
     demand = results.node['demand']
     pwfs = [2,4,16,20]
     total_pwf_supply = 0
@@ -726,7 +779,6 @@ def damaged_network_t15():
     leak_demand = results.node['leak_demand']
     print(leak_demand.head())
     #print(directions)
-    leak_demand.to_excel('leak_demand.xlsx')
-    demand.to_excel('demand_damaged.xlsx')
-
-damaged_network_t15()
+    leak_demand.to_excel('leak_demand_t15.xlsx')
+    demand.to_excel('demand_damaged_t15.xlsx')
+#damaged_network_t15()
