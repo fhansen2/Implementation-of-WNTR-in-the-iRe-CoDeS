@@ -328,7 +328,7 @@ def damaged_network_t0():
                 #print("omitted split at "+str(linkto)+" "+str(i+1))
                 wn = wntr.morph.split_pipe(wn,'f'+str(i)+'t'+str(linkto-1), 'f'+str(i)+'t'+str(linkto-1)+'_L', 'f'+str(i)+'t'+str(linkto-1)+'Leak')
                 pipe = wn.get_node('f'+str(i)+'t'+str(linkto-1)+'Leak')
-                pipe.add_leak(wn, discharge_coeff=0.7, area=0.05, start_time=0,end_time=3600) # area: from example of WNTR documentation, discharge_coeff: default = 0.75
+                pipe.add_leak(wn, discharge_coeff=0.2, area=0.01, start_time=0,end_time=3600) # area: from example of WNTR documentation, discharge_coeff: default = 0.75
 
     wntr.graphics.plot_network(wn, node_alpha=0, node_labels=True, title='Case Study Network', link_alpha=0)
    
